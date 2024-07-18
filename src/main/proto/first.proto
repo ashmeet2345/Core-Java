@@ -1,0 +1,24 @@
+syntax="proto3";
+import "2nd.proto";
+package Person;
+
+message Person{
+  int32 age = 1;
+  string first_name = 2;
+  string last_name = 3;
+  bytes small_picture = 4;
+  bool is_profile_verified = 5;
+  float height = 6;
+
+  repeated string phone_numbers = 7;
+  EyeColor eyeColor = 8;
+
+  Date.Date birthDate = 9;
+}
+
+enum EyeColor{
+  Unknown = 0;
+  Brown = 1;
+  Green = 2;
+  Blue = 3;
+}
