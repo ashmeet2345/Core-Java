@@ -1,10 +1,11 @@
 package DSA;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 
 public class DynamicProgrammingLevel2 {
 
-    public class Pair{
+    public static class Pair implements Comparable<Pair>{
         int i;
         int s;
         int j;
@@ -23,6 +24,15 @@ public class DynamicProgrammingLevel2 {
             this.path=path;
         }
 
+        public Pair(int i,int j){
+            this.i=i;
+            this.j=j;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            return this.i-o.i;
+        }
     }
 
     public void largestSquareSubmatrixOfAll1s(int[][] matrix){
@@ -244,6 +254,26 @@ public class DynamicProgrammingLevel2 {
         System.out.print(mx-1);
     }
 
+    public void maximumNonOverlappingBridges(Pair[] arr){
+        Arrays.sort(arr);
+
+        int[] dp=new int[arr.length];
+        int maximum=Integer.MIN_VALUE;
+        dp[0]=1;
+        for(int i=1;i<dp.length;i++){
+            int max=0;
+            for(int j=0;j<i;j++){
+                if(arr[i].j>arr[j].j){
+                    max=Math.max(max,dp[j]);
+                }
+            }
+            dp[i]=max+1;
+            if(dp[i]>maximum){
+                maximum=dp[i];
+            }
+        }
+        System.out.println(maximum);
+    }
 
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
@@ -280,5 +310,17 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Longest Bitonic subsequence: ");
         dp.longestBitonicSubsequence(new int[]{10,22,9,33,21,50,41,60,80,3});
+
+        System.out.print("Maximum Non-Overlapping Bridges: ");
+        Pair[] arr=new Pair[8];
+        arr[0]=new Pair(0,2);
+        arr[1]=new Pair(2,0);
+        arr[2]=new Pair(1,1);
+        arr[3]=new Pair(3,3);
+        arr[7]=new Pair(4,5);
+        arr[6]=new Pair(5,4);
+        arr[5]=new Pair(6,6);
+        arr[4]=new Pair(7,7);
+        dp.maximumNonOverlappingBridges(arr);
     }
 }

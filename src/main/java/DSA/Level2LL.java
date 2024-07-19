@@ -108,10 +108,9 @@ public class Level2LL {
             while(temp2.next.next!=null){
                 temp2.next=temp2.next.next;
             }
-
-
         }
     }
+
     public static void main(String[] args) {
 
         Lists l=new Lists();
