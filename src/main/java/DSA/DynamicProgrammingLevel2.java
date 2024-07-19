@@ -275,6 +275,41 @@ public class DynamicProgrammingLevel2 {
         System.out.println(maximum);
     }
 
+    public void perfectSquaresSum(int num){
+        int[] dp=new int[num+1];
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=2;
+        dp[3]=3;
+        for(int i=4;i<=num;i++){
+            int min=Integer.MAX_VALUE;
+            for(int j=2;j*j<=i;j++){
+                if(i%(j*j)!=0){
+                    min=Math.min(dp[i-(j*j)]+1,min);
+                    dp[i]=min;
+                }
+                if(i%(j*j)==0){
+                    dp[i]=1;
+                }
+            }
+        }
+
+        System.out.println(dp[num]);
+    }
+
+    public void catalanNumbers(int num){
+        int[] dp=new int[num+1];
+        dp[0]=1;
+        dp[1]=1;
+        for(int i=2;i<=num;i++){
+            for(int j=0;j<i;j++){
+                dp[i]+=dp[j]*dp[i-j-1];
+            }
+        }
+
+        System.out.println(dp[num]);
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -322,5 +357,11 @@ public class DynamicProgrammingLevel2 {
         arr[5]=new Pair(6,6);
         arr[4]=new Pair(7,7);
         dp.maximumNonOverlappingBridges(arr);
+
+        System.out.print("Perfect sum of squares: ");
+        dp.perfectSquaresSum(16);
+
+        System.out.print("Catalan number: ");
+        dp.catalanNumbers(5);
     }
 }
