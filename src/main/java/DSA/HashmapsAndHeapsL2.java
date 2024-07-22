@@ -113,6 +113,56 @@ public class HashmapsAndHeapsL2 {
         System.out.println(maxL);
     }
 
+    public void minimumWindowSubstring(String str1,String str2){
+        Map<Character,Integer> mp1=new HashMap<>();
+        Map<Character,Integer> mp2=new HashMap<>();
+
+        for(int i=0;i<str2.length();i++){
+            mp2.put(str2.charAt(i),mp2.getOrDefault(str2.charAt(i),0)+1);
+        }
+
+        String ans="";
+        int i=-1;
+        int j=-1;
+        int size=0;
+        int strSize=str2.length();
+        while(true){
+            boolean f1=false;
+            boolean f2=false;
+            while(i<str1.length()-1 && size<strSize){
+                i++;
+                char ch=str1.charAt(i);
+                mp1.put(ch,mp1.getOrDefault(ch,0)+1);
+
+                if(mp1.getOrDefault(ch,0) <= mp2.getOrDefault(ch,0)){
+                    size++;
+                }
+                f1=true;
+            }
+
+            while(j<i && size==strSize){
+                String pans=str1.substring(j+1,i+1);
+                if(ans.length()==0 || pans.length() < ans.length()){
+                    ans=pans;
+                }
+                j++;
+                char ch=str1.charAt(j);
+                if(mp1.get(ch)==1){
+                    mp1.remove(ch);
+                } else {
+                    mp1.put(ch,mp1.get(ch)-1);
+                }
+                if(mp1.getOrDefault(ch,0) < mp2.getOrDefault(ch,0))
+                    size--;
+                f2=true;
+            }
+            if(f1==false && f2==false){
+                break;
+            }
+        }
+        System.out.print(ans);
+    }
+
 
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
@@ -137,6 +187,9 @@ public class HashmapsAndHeapsL2 {
 
         System.out.print("Largest Subarray with sum 0: ");
         hash.largestSubarrayWithSum0(new int[]{2,8,-3,-5,2,-4,6,1,2,1,-3,4});
+
+        System.out.println("Minimum window substring I: ");
+        hash.minimumWindowSubstring("dbaecbbabdcaafbddcabgba","abbcdc");
 
     }
 }
