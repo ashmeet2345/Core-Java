@@ -150,7 +150,7 @@ public class HashmapsAndHeapsL2 {
                 if(mp1.get(ch)==1){
                     mp1.remove(ch);
                 } else {
-                    mp1.put(ch,mp1.get(ch)-1);
+                     mp1.put(ch,mp1.get(ch)-1);
                 }
                 if(mp1.getOrDefault(ch,0) < mp2.getOrDefault(ch,0))
                     size--;
