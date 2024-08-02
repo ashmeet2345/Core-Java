@@ -1,6 +1,4 @@
-package org.example;
-
-import java.nio.file.attribute.UserPrincipal;
+package Fundamentals;
 
 public class Singleton {
 

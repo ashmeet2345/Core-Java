@@ -1,4 +1,4 @@
-package org.example;
+package Fundamentals;
 
 public class Arr {
     public static void main(String[] args) {

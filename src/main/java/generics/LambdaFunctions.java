@@ -1,7 +1,5 @@
 package generics;
 
-import org.example.Arr;
-
 import java.util.ArrayList;
 
 public class LambdaFunctions{

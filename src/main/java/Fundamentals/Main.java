@@ -1,4 +1,4 @@
-package org.example;
+package Fundamentals;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 

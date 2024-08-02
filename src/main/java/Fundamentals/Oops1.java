@@ -1,5 +1,4 @@
-package org.example;
-import org.example.Arr.*;
+package Fundamentals;
 
 
 public class Oops1 {
