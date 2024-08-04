@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -51,5 +53,15 @@ public class Streaming {
         IntStream.rangeClosed(1,10).forEach(t-> System.out.println(Thread.currentThread().getName()+":"+t));
         System.out.println("----------------------------------------------------");
         IntStream.rangeClosed(1,10).parallel().forEach(t-> System.out.println(Thread.currentThread().getName()+":"+t));
+
+        IntStream oldstream=IntStream.of(1,2,3,4,5,6);
+        Stream<Integer> newStream=oldstream.boxed();
+        //boxed helps in converting primitive data type into its respective Wrapper class.
+        //oldstream has data with data type of int
+        //newStream has data with data type of Integer
+        Consumer consume=(t-> System.out.print(t+" "));
+        newStream.forEach(consume);
+
+
     }
 }

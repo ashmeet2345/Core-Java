@@ -1,6 +1,8 @@
 package Collections;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,5 +15,7 @@ public class Main {
         * but if we store any custom object or wrapper class, so in order to store only distinct values
         * we have to override hashCode and equals method in the class, else they will store duplicate values
         * as well*/
+
+        
     }
 }
