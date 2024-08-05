@@ -1,5 +1,11 @@
 package DSA;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+
 public class SlidingWindow {
 
     public void maxSumInWindowOfSizeK(int[] arr,int k){
@@ -29,6 +35,7 @@ public class SlidingWindow {
         System.out.println(mxsum);
 
     }
+
 
     public static void main(String[] args) {
         SlidingWindow window=new SlidingWindow();

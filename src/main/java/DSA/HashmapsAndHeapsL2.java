@@ -116,7 +116,61 @@ public class HashmapsAndHeapsL2 {
     public void minimumWindowSubstring(String str1,String str2){
         Map<Character,Integer> mp1=new HashMap<>();
         Map<Character,Integer> mp2=new HashMap<>();
+        int count1=0;
+        int count2=0;
+        for(int i=0;i<str2.length();i++){
+            if(!mp2.containsKey(str2.charAt(i))){
+                mp2.put(str2.charAt(i),1);
+            } else {
+                mp2.put(str2.charAt(i),mp2.get(str2.charAt(i))+1);
+            }
+            count2++;
+        }
 
+        int i=0;
+        int j=0;
+        int strLen=Integer.MAX_VALUE;
+        String resStr="";
+
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+            while(count1!=count2 && i<str1.length()){
+                if(!mp1.containsKey(str1.charAt(i))){
+                    mp1.put(str1.charAt(i),1);
+                } else {
+                    mp1.put(str1.charAt(i),mp1.get(str1.charAt(i))+1);
+                }
+                if(mp1.get(str1.charAt(i))<=mp2.getOrDefault(str1.charAt(i),0)){
+                    count1++;
+                }
+                i++;
+                m1=true;
+            }
+            while(j<i && count1==count2){
+                int v=mp1.getOrDefault(str1.charAt(j),0);
+                int r=mp2.getOrDefault(str1.charAt(j),0);
+                String res=str1.substring(j,i);
+                if(v==1){
+                    mp1.remove(str1.charAt(j));
+                }else if(v>r){
+                    mp1.put(str1.charAt(j),v-1);
+                } else if(v==r){
+                    mp1.put(str1.charAt(j),v-1);
+                    count1--;
+                }
+                if(res.length()<strLen){
+                    strLen=res.length();
+                    resStr=res;
+                }
+                j++;
+                m2=true;
+            }
+            if(!m1 && !m2){
+                break;
+            }
+        }
+        System.out.println(resStr);
     }
 
 
