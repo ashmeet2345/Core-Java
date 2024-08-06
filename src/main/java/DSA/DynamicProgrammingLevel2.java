@@ -324,6 +324,59 @@ public class DynamicProgrammingLevel2 {
 
         Arrays.stream(dp).forEach(i-> System.out.print(i+" "));
     }
+
+    public void palindromePartitioningWithMinimumCuts(String str){
+        boolean[][] dp=new boolean[str.length()][str.length()];
+
+        for(int g=0;g<str.length();g++){
+            for(int i=0,j=g;j<dp.length;i++,j++){
+                if(g==0){
+                    dp[i][j]=true;
+                }else if(g==1){
+                    dp[i][j]= str.charAt(i)==str.charAt(j);
+                }else{
+                    if(str.charAt(i)==str.charAt(j) && dp[i+1][j-1]==true){
+                        dp[i][j]=true;
+                    } else {
+                        dp[i][j]=false;
+                    }
+                }
+            }
+        }
+
+        int[] res=new int[str.length()];
+        res[0]=0;
+        for(int j=1;j<res.length;j++){
+            int min=Integer.MAX_VALUE;
+            for(int i=j;i>=1;i--){
+                if(dp[i][j]){
+                    if(res[i-1]<min){
+                        min=res[i-1];
+                    }
+                }
+            }
+            res[j]=min+1;
+        }
+        System.out.println(res[str.length()-1]);
+    }
+
+    public int longestCommonSubsequenceRecursive(String a,String b,int n,int m,int[][] t){
+        if(n==0 || m==0){
+            return 0;
+        }
+
+        if(t[n][m]!=-1){
+            return t[n][m];
+        }
+
+        if(a.charAt(n-1)==b.charAt(m-1)){
+            return 1+longestCommonSubsequenceRecursive(a,b,n-1,m-1,t);
+        } else {
+            return Math.max(longestCommonSubsequenceRecursive(a,b,n-1,m,t),
+                    longestCommonSubsequenceRecursive(a,b,n,m-1,t));
+        }
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -380,5 +433,13 @@ public class DynamicProgrammingLevel2 {
 
         System.out.println("Rod cutting problem");
         dp.rodCuttingProblem(new int[]{0,1,5,8,9,10,17,17,20});
+
+        System.out.print("\nPalindrome Partitioning: ");
+        dp.palindromePartitioningWithMinimumCuts("abccbc");
+
+        String x="abccdc"; String y="abbcdt"; int[][] t=new int[x.length()+1][y.length()+1];
+        for (int[] row : t)
+            Arrays.fill(row, -1);
+        System.out.println("Longest common substring: "+dp.longestCommonSubsequenceRecursive(x,y,6,6,t));
     }
 }
