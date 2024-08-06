@@ -310,6 +310,20 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[num]);
     }
 
+    public void rodCuttingProblem(int[] arr){
+        int[] dp=new int[arr.length];
+        dp[0]=0;
+        dp[1]=arr[1];
+        int maxx=Integer.MIN_VALUE;
+        for(int i=2;i<arr.length;i++){
+            for(int j=1;j<i;j++){
+                maxx=Math.max(maxx,Math.max(arr[i],dp[j]+dp[i-j]));
+            }
+            dp[i]=maxx;
+        }
+
+        Arrays.stream(dp).forEach(i-> System.out.print(i+" "));
+    }
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -363,5 +377,8 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Catalan number: ");
         dp.catalanNumbers(5);
+
+        System.out.println("Rod cutting problem");
+        dp.rodCuttingProblem(new int[]{0,1,5,8,9,10,17,17,20});
     }
 }
