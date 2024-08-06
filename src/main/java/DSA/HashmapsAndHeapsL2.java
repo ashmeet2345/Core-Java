@@ -173,6 +173,41 @@ public class HashmapsAndHeapsL2 {
         System.out.println(resStr);
     }
 
+    public void longestSubstringWithoutRepeatingCharacters(String str){
+        Map<Character, Integer> mp=new HashMap<>();
+
+        int i=0;
+        int j=0;
+        int maxlen=Integer.MIN_VALUE;
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+            while(i<str.length()){
+                m1=true;
+                char ch=str.charAt(i);
+                if(mp.getOrDefault(ch,0) == 2){
+                    break;
+                } else {
+                    int len=i-j;
+                    if(len>maxlen){
+                        maxlen=len;
+                    }
+                }
+            }
+            while(j<i){
+                m2=true;
+                char ch=str.charAt(j);
+                mp.put(ch,mp.get(ch)-1);
+                if(mp.get(ch)==1){
+                    break;
+                }
+            }
+
+            if(!m1 && !m2) break;
+        }
+
+        System.out.println(maxlen);
+    }
 
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
@@ -200,6 +235,7 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("Minimum window substring I: ");
         hash.minimumWindowSubstring("dbaecbbabdcaafbddcabgba","abbcdc");
+        hash.longestSubstringWithoutRepeatingCharacters("dbaecbbabdcaafbddcabgba");
 
     }
 }
