@@ -442,6 +442,21 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[0][s.length()-1]);
     }
 
+    public void kadanesAlgorithm(int[] arr){
+        int curr=arr[0];
+        int over=arr[0];
+        for(int i=1;i<arr.length;i++){
+            if(curr>0){
+                curr+=arr[i];
+            } else {
+                curr=arr[i];
+            }
+
+            over=Math.max(over,curr);
+        }
+        System.out.println(over);
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -514,5 +529,8 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Count Palindromic Subsequence: ");
         dp.countPalindromicSubsequence("abccbc");
+
+        System.out.print("Kadane's Algorithm: ");
+        dp.kadanesAlgorithm(new int[]{4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1});
     }
 }
