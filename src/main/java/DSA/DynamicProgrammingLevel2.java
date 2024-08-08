@@ -2,6 +2,7 @@ package DSA;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class DynamicProgrammingLevel2 {
 
@@ -366,15 +367,79 @@ public class DynamicProgrammingLevel2 {
         }
 
         if(t[n][m]!=-1){
-            return t[n][m];
+            return t[n][m]+1;
         }
 
         if(a.charAt(n-1)==b.charAt(m-1)){
+            t[n][m]=1;
             return 1+longestCommonSubsequenceRecursive(a,b,n-1,m-1,t);
         } else {
             return Math.max(longestCommonSubsequenceRecursive(a,b,n-1,m,t),
                     longestCommonSubsequenceRecursive(a,b,n,m-1,t));
         }
+    }
+
+    public void lcsTopDown(String x, String y){
+        int[][] dp=new int[x.length()+1][y.length()+1];
+        for(int i=0;i<=x.length();i++){
+            dp[i][0]=0;
+        }
+        for(int j=0;j<=y.length();j++){
+            dp[0][j]=0;
+        }
+        int xlen=x.length();
+        int ylen=y.length();
+        for(int i=1;i<dp.length;i++){
+            for(int j=1;j<dp[0].length;j++){
+                 if(x.charAt(i-1)==y.charAt(j-1)){
+                     dp[i][j]=1+dp[i-1][j-1];
+                 } else {
+                     dp[i][j]=Math.max(dp[i][j-1],dp[i-1][j]);
+                 }
+            }
+        }
+        System.out.println(dp[xlen][ylen]);
+    }
+
+    public void longestPalindromicSubsequence(String s){
+        int[][] dp=new int[s.length()][s.length()];
+        for(int g=0;g<s.length();g++){
+            for(int i=0,j=g;j<dp.length;i++,j++){
+                if(g==0){
+                    dp[i][j]=1;
+                }else if (g==1){
+                    dp[i][j]=s.charAt(i)==s.charAt(j)?2:1;
+                }else {
+                    if(s.charAt(i) == s.charAt(j)){
+                        dp[i][j]=2+dp[i+1][j-1];
+                    } else {
+                        dp[i][j]=Math.max(dp[i][j-1],dp[i+1][j]);
+                    }
+                }
+            }
+        }
+        System.out.println(dp[0][s.length()-1]);
+    }
+
+
+    public void countPalindromicSubsequence(String s){
+        int[][] dp=new int[s.length()][s.length()];
+        for(int g=0;g<s.length();g++){
+            for(int i=0,j=g;j<dp.length;i++,j++){
+                if(g==0){
+                    dp[i][j]=1;
+                }else if(g==1){
+                    dp[i][j]=s.charAt(i)==s.charAt(j)?3:2;
+                }else{
+                    if(s.charAt(i)==s.charAt(j)){
+                        dp[i][j]=dp[i+1][j]+dp[i][j-1]+1;
+                    } else {
+                        dp[i][j]=dp[i+1][j]+dp[i][j-1]-dp[i+1][j-1];
+                    }
+                }
+            }
+        }
+        System.out.println(dp[0][s.length()-1]);
     }
 
     public static void main(String[] args) {
@@ -441,5 +506,13 @@ public class DynamicProgrammingLevel2 {
         for (int[] row : t)
             Arrays.fill(row, -1);
         System.out.println("Longest common substring: "+dp.longestCommonSubsequenceRecursive(x,y,6,6,t));
+        System.out.println("LCS Top down: ");
+        dp.lcsTopDown("abcbc","abccdb");
+
+        System.out.print("Longest Palindromic Subsequence: ");
+        dp.longestPalindromicSubsequence("abkccbc");
+
+        System.out.print("Count Palindromic Subsequence: ");
+        dp.countPalindromicSubsequence("abccbc");
     }
 }
