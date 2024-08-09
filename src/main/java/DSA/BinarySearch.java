@@ -94,6 +94,28 @@ public class BinarySearch {
         System.out.println("Element not found");
     }
 
+    public void minimumInRotatedSortedArray(int[] arr){
+        int low=0;
+        int high=arr.length-1;
+        int min=Integer.MAX_VALUE;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[low] <= arr[high]){
+                min=Math.min(min,arr[low]);
+                break;
+            }
+
+            if(arr[low]<=arr[mid]){
+                min=Math.min(min,arr[low]);
+                low=mid+1;
+            } else {
+                high=mid-1;
+                min=Math.min(min,arr[mid]);
+            }
+        }
+        System.out.println(min);
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -107,5 +129,8 @@ public class BinarySearch {
 
         System.out.print("Search in rotated sorted array 2: ");
         bs.searchElementInRotatedSortedArray2(new int[]{25,25,26,50,1,25,25,25},1);
+
+        System.out.println("Minimum in rotated sorted array: ");
+        bs.minimumInRotatedSortedArray(new int[]{25,26,50,1,5,6,9,12,15});
     }
 }
