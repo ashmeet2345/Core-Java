@@ -136,6 +136,31 @@ public class BinarySearch {
         return -1;
     }
 
+    public int findPeakElement(int[] arr){
+        int low=0;
+        int high=arr.length-1;
+
+        if(arr[low]>arr[low+1]){
+            return arr[low];
+        }
+        if(arr[high]>arr[high-1]){
+            return arr[high];
+        }
+        low++;
+        high--;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[mid]>arr[mid-1] && arr[mid]>arr[mid+1]){
+                return arr[mid];
+            } else if(arr[mid] > arr[mid-1] && arr[mid]<arr[mid+1]){
+                low=mid+1;
+            } else {
+                high=mid-1;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -154,5 +179,7 @@ public class BinarySearch {
         bs.minimumInRotatedSortedArray(new int[]{25,26,50,1,5,6,9,12,15});
 
         System.out.println("Single element in a sorted array: "+bs.singleElementInSortedArray(new int[]{1,1,2,2,3,3,4,4,5,5,6}));
+
+        System.out.println("Peak Element: "+bs.findPeakElement(new int[]{1,99,6,5,4,3}));
     }
 }
