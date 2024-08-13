@@ -6,6 +6,16 @@ public class Lists {
         int data;
         Node next;
         Node child;
+        Node random;
+
+        public Node(){}
+
+        public Node(int data) {
+            this.data=data;
+            this.next=null;
+            this.child=null;
+            this.random=null;
+        }
     }
 
     public static class LinkedList{
@@ -375,6 +385,33 @@ public class Lists {
             }
 
             return dummy.child;
+        }
+
+        public void cloningLinkedListWithRandomPointers(Node head){
+            Node temp=head;
+            while(temp!=null){
+                Node newNode=new Node(temp.data);
+                newNode.next=temp.next;
+                temp.next=newNode;
+                temp=temp.next.next;
+            }
+            temp=head;
+            while(temp!=null){
+                Node copy=temp.next;
+                if(temp.random==null){
+                    copy.random=null;
+                } else {
+                    copy.random=temp.random.next;
+                }
+                temp=temp.next.next;
+            }
+            Node node=new Node(-1);
+            Node res=node;
+            temp=head;
+            while(temp!=null){
+                res.next=temp.next;
+                temp.next=temp.next.next;
+            }
         }
     }
 
