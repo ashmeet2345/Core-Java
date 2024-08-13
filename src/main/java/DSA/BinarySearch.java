@@ -161,6 +161,51 @@ public class BinarySearch {
         return -1;
     }
 
+    public double medianOfTwoSortedArraysOfDifferentSizes(int[] arr1,int[] arr2){
+        int n1=arr1.length;
+        int n2=arr2.length;
+        int i=0;
+        int j=0;
+        int n=n1+n2;
+        int ind2=n/2;
+        int ind1=ind2-1;
+        int count=0;
+        int ind1el=-1;
+        int ind2el=-1;
+        while(i<n1 && j<n2){
+            if(arr1[i]<arr2[j]){
+                if(count==ind1) ind1el=arr1[i];
+                if(count==ind2) ind2el=arr1[i];
+                count++;
+                i++;
+            } else {
+                if(count==ind1) ind1el=arr2[i];
+                if(count==ind2) ind2el=arr2[i];
+                count++;
+                j++;
+            }
+        }
+        while(i<n1){
+            if(count==ind1) ind1el=arr1[i];
+            if(count==ind2) ind2el=arr1[i];
+            count++;
+            i++;
+        }
+
+        while(j<n2){
+            if(count==ind1) ind1el=arr2[i];
+            if(count==ind2) ind2el=arr2[i];
+            count++;
+            j++;
+        }
+
+        if(n%2==1){
+            return ind2el;
+        } else {
+            return (double)(ind1el+ind2el)/2.0;
+        }
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");

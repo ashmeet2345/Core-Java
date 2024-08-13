@@ -5,11 +5,13 @@ public class Lists {
     public static class Node{
         int data;
         Node next;
+        Node child;
     }
 
     public static class LinkedList{
         Node head;
         Node tail;
+        Node childTail;
         int size;
 
         void addLast(int num){
@@ -339,6 +341,40 @@ public class Lists {
                     prev=prev.next;
                 }
             }
+        }
+
+        public Node flatteningLinkekedList(Node head){
+            if(head==null || head.next==null)
+                return head;
+            Node mergedHead=flatteningLinkekedList(head.next);
+            return mergeList(head,mergedHead);
+        }
+
+        public Node mergeList(Node head1, Node head2){
+            Node dummy=new Node();
+            Node res=dummy;
+            Node temp1=head1;
+            Node temp2=head2;
+            while(temp1!=null&&temp2!=null){
+                if(temp1.data < temp2.data){
+                    res.child=temp1;
+                    res=temp1;
+                    temp1=temp1.next;
+                } else {
+                    res.child=temp2;
+                    res=temp2;
+                    temp2=temp2.next;
+                }
+                res.next=null;
+            }
+
+            if(temp1!=null){
+                res.child=temp1;
+            } else {
+                res.child=temp2;
+            }
+
+            return dummy.child;
         }
     }
 
