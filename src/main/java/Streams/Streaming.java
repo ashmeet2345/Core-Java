@@ -62,6 +62,11 @@ public class Streaming {
         Consumer consume=(t-> System.out.print(t+" "));
         newStream.forEach(consume);
 
+        List<Integer> l= Arrays.asList(1,5,9,15,33,109);
+        Integer sum=l.parallelStream().reduce(0,Integer::sum);
+        System.out.println("\n"+sum);
+
+
 
     }
 }
