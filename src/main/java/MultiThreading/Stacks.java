@@ -17,7 +17,7 @@ public class Stacks {
         //But to enter that such block, we need a lock to enter (like we need a lock to enter into a room)
         //By default, every object of java can be used as a lock to enter into such a block.
         //Primitive data types cannot be used as locks
-        //But instance of Integer can be used
+        //But instance of Integer can be used for example
         /*we couldve used new Integer() or new String() or new Object() etc*)*/
         if(top == arr.length-1){
             int[] newArr=new int[arr.length*2];

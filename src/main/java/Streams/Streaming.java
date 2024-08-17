@@ -56,9 +56,11 @@ public class Streaming {
 
         IntStream oldstream=IntStream.of(1,2,3,4,5,6);
         Stream<Integer> newStream=oldstream.boxed();
+
         //boxed helps in converting primitive data type into its respective Wrapper class.
         //oldstream has data with data type of int
         //newStream has data with data type of Integer
+
         Consumer consume=(t-> System.out.print(t+" "));
         newStream.forEach(consume);
 
