@@ -7,12 +7,17 @@ public class Singleton {
         System.out.println(obj1.getName());
         UseSingleton obj2=UseSingleton.getInstance("Sameer");
         System.out.println(obj2.getName());
+
     }
 }
 
 class UseSingleton{
     private String name;
     private static volatile UseSingleton instance;
+
+    private UseSingleton(){
+        getInstance("");
+    }
 
     private UseSingleton(String name){
         this.name=name;
