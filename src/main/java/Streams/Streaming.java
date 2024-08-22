@@ -68,7 +68,6 @@ public class Streaming {
         Integer sum=l.parallelStream().reduce(0,Integer::sum);
         System.out.println("\n"+sum);
 
-
-
+        users.parallelStream().forEach(user -> System.out.println(user));
     }
 }
