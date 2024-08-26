@@ -242,6 +242,60 @@ public class GraphSeries {
         }
 
     }
+    public void replace1s(int[][] graph,int row,int col,boolean[][] visited){
+        if(row<0 || row>=graph.length || col<0 || col>=graph[0].length || visited[row][col] || graph[row][col]!=1){
+            return;
+        } else {
+            visited[row][col]=true;
+        }
+        replace1s(graph,row-1,col,visited);
+        replace1s(graph,row,col+1,visited);
+        replace1s(graph,row+1,col,visited);
+        replace1s(graph,row,col-1,visited);
+    }
+    public void numberOfEnclaves(int[][] graph){
+        int n=graph.length;
+        int m=graph[0].length;
+        int count=0;
+        boolean[][] visited=new boolean[n][m];
+
+        for(int j=0;j<m;j++){
+            if(!visited[0][j] && graph[0][j]==1){
+                replace1s(graph,0,j,visited);
+            }
+            if(!visited[n-1][j] && graph[n-1][j]==1){
+                replace1s(graph,n-1,j,visited);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(!visited[i][0] && graph[i][0]==1){
+                replace1s(graph,i,0,visited);
+            }
+            if(!visited[i][m-1] && graph[i][m-1]==1){
+                replace1s(graph,i,m-1,visited);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+               if(visited[i][j] && graph[i][j]==1){
+                    graph[i][j]=-1;
+                }
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j] && graph[i][j]!=0){
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+
+    }
 
     public static void main(String[] args) {
 
@@ -304,5 +358,9 @@ public class GraphSeries {
                      {'X','O','X','O','X'},
                      {'O','O','X','X','X'}};
         g.surroundRegions(t2);
+
+        System.out.print("Number of Enclaves: ");
+        int[][] t3={{0,0,0,1},{0,1,1,0},{0,1,1,0},{0,0,0,1},{0,1,1,0}};
+        g.numberOfEnclaves(t3);
     }
 }
