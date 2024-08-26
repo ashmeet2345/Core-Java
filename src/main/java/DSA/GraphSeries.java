@@ -186,6 +186,63 @@ public class GraphSeries {
             System.out.println();
         }
     }
+
+    int[] srow=new int[]{-1,0,1,0};
+    int[] scol=new int[]{0,1,0,-1};
+
+    public void replaceOsWithXs(char[][] graph,int row,int col,boolean[][] visited){
+        if(row<0 || row>=graph.length || col<0 || col>=graph[0].length || visited[row][col] || graph[row][col]!='O'){
+            return;
+        } else {
+            visited[row][col]=true;
+        }
+        replaceOsWithXs(graph,row-1,col,visited);
+        replaceOsWithXs(graph,row,col+1,visited);
+        replaceOsWithXs(graph,row+1,col,visited);
+        replaceOsWithXs(graph,row,col-1,visited);
+    }
+
+    public void surroundRegions(char[][] graph){
+        int n=graph.length;
+        int m=graph[0].length;
+        boolean[][] visited=new boolean[n][m];
+
+        for(int j=0;j<m;j++){
+            if(!visited[0][j] && graph[0][j]=='O'){
+                replaceOsWithXs(graph,0,j,visited);
+            }
+            if(!visited[n-1][j] && graph[n-1][j]=='O'){
+                replaceOsWithXs(graph,n-1,j,visited);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(!visited[i][0] && graph[i][0]=='O'){
+                replaceOsWithXs(graph,i,0,visited);
+            }
+            if(!visited[i][m-1] && graph[i][m-1]=='O'){
+                replaceOsWithXs(graph,i,m-1,visited);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j] && graph[i][j]=='O'){
+                    graph[i][j]='X';
+                }
+            }
+        }
+
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                System.out.print(graph[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -238,5 +295,14 @@ public class GraphSeries {
         System.out.println("Distance of nearest cell having 1s and 0s: ");
         int[][] t1={{0,0,0},{0,1,0},{1,0,1}};
         g.distanceOfNearestCellHaving1and0(t1);
+
+
+        System.out.println("Surround Regions (Replace Os with Xs)");
+        char[][] t2={{'X','X','X','X','X'},
+                     {'X','O','O','X','O'},
+                     {'X','X','O','X','O'},
+                     {'X','O','X','O','X'},
+                     {'O','O','X','X','X'}};
+        g.surroundRegions(t2);
     }
 }
