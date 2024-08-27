@@ -297,6 +297,55 @@ public class GraphSeries {
 
     }
 
+    public void isGraphBipartiteBfs(ArrayList<ArrayList<Integer> > graph, int src){
+        Queue<Integer> queue=new ArrayDeque<>();
+        queue.add(src);
+        int[] colour=new int[graph.size()];
+        Arrays.fill(colour,0);
+        colour[src]=1;
+        while(!queue.isEmpty()){
+            int node=queue.poll();
+            for(int it:graph.get(node)){
+                if(colour[it]==0){
+                    colour[it]=colour[node]*-1;
+                    queue.add(it);
+                } else if(colour[it]==colour[node]){
+                    System.out.println("Not Bipartite");
+                    return;
+                }
+            }
+        }
+        System.out.println("Bipartite");
+    }
+
+    public boolean dfsForBipartite(ArrayList<ArrayList<Integer> > graph,int src, int[] colour,int col){
+        colour[src]=col;
+        for(int it: graph.get(src)){
+            if(colour[it]==0){
+                if(!dfsForBipartite(graph,it,colour,col*-1))
+                    return false;
+            } else if(colour[it]==colour[src]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void isBipartiteUsingDfs(ArrayList<ArrayList<Integer> > graph){
+        int[] colour=new int[graph.size()];
+        Arrays.fill(colour,0);
+        for(int i=1;i<colour.length;i++){
+            if(colour[i]==0){
+               if(!dfsForBipartite(graph,i,colour,1)){
+                   System.out.println("Not Bipartite");
+                   return;
+               }
+            }
+        }
+        System.out.println("Bipartite");
+
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -362,5 +411,11 @@ public class GraphSeries {
         System.out.print("Number of Enclaves: ");
         int[][] t3={{0,0,0,1},{0,1,1,0},{0,1,1,0},{0,0,0,1},{0,1,1,0}};
         g.numberOfEnclaves(t3);
+
+        System.out.print("To check if graph is bipartite or not using bfs: ");
+        g.isGraphBipartiteBfs(graph,1);
+
+        System.out.print("To check if graph is bipartite or not using dfs: ");
+        g.isBipartiteUsingDfs(graph);
     }
 }
