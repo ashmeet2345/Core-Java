@@ -466,6 +466,51 @@ public class GraphSeries {
         }
     }
 
+    public void alienDictionary(ArrayList<String> strings, int k){
+        ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
+        for(int i=0;i<k;i++){
+            graph.add(new ArrayList<>());
+        }
+
+        for(int i=0,j=1;i<strings.size()-1;i++,j++){
+            String s1=strings.get(i);
+            String s2=strings.get(j);
+            for(int n=0;n<Math.max(s1.length(),s2.length());n++){
+                if(s1.charAt(n)!=s2.charAt(n)){
+                    graph.get((int)(s1.charAt(n)-2*'0'-1)).add((int)(s2.charAt(n)-2*'0'-1));
+                    break;
+                }
+            }
+        }
+
+        int[] indexes=new int[k];
+        Arrays.fill(indexes,0);
+
+        for(int i=0;i<k;i++){
+            for(int it: graph.get(i)){
+                indexes[it]++;
+            }
+        }
+
+        Queue<Integer> q=new ArrayDeque<>();
+        for(int i=0;i<k;i++){
+            if(indexes[i]==0){
+                q.add(i);
+            }
+        }
+
+        ArrayList<Integer> topo=new ArrayList<>();
+        while(q.size()>0){
+            int node=q.poll();
+            topo.add(node);
+            for(int it: graph.get(node)){
+                indexes[it]--;
+                if(indexes[it]==0) q.add(it);
+            }
+        }
+        topo.stream().forEach(s-> System.out.print((char)(s+1+2*'0')+" "));
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -562,5 +607,14 @@ public class GraphSeries {
         schedule.add(new Pair(2,1));
         schedule.add(new Pair(3,2));
         g.courseSchedule1And2(schedule,schedule.size());
+
+        ArrayList<String> list=new ArrayList<>();
+        list.add("baa");
+        list.add("abcd");
+        list.add("abca");
+        list.add("cab");
+        list.add("cad");
+        System.out.println("Alien Dictionary: ");
+        g.alienDictionary(list,4);
     }
 }
