@@ -398,6 +398,33 @@ public class GraphSeries {
         }
     }
 
+    public void topologicalSortBfs(ArrayList<ArrayList<Integer> > graph, int src){
+        int[] indegree=new int[graph.size()];
+        for(int i=src;i<graph.size();i++){
+            for(int it: graph.get(i)){
+                indegree[it]++;
+            }
+        }
+        Queue<Integer> queue=new ArrayDeque<>();
+        for(int i=2;i<indegree.length;i++){
+            if(indegree[i]==0){
+                queue.add(i);
+            }
+        }
+
+        ArrayList<Integer> ans=new ArrayList<>();
+        while(queue.size()>0){
+            int node=queue.poll();
+            ans.add(node);
+            for(int it:graph.get(node)){
+                indegree[it]--;
+                if(indegree[it]==0) queue.add(it);
+            }
+        }
+
+        ans.stream().forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -483,5 +510,9 @@ public class GraphSeries {
 
         System.out.print("Topological sort using Dfs: ");
         g.topologicalSortDfs(directedGraph);
+
+        System.out.println();
+        System.out.print("Topological sort using Bfs: ");
+        g.topologicalSortBfs(directedGraph,2);
     }
 }
