@@ -378,6 +378,25 @@ public class GraphSeries {
         System.out.println("Cycle not Detected");
     }
 
+    public void dfsTopoSort(ArrayList<ArrayList<Integer> > graph,int src,int[] visited){
+        visited[src]=1;
+        for(int it: graph.get(src)){
+            if(visited[it]!=1){
+                dfsTopoSort(graph,it,visited);
+            }
+        }
+        System.out.print(src+" ");
+    }
+
+    public void topologicalSortDfs(ArrayList<ArrayList<Integer> > graph){
+        int[] visited=new int[graph.size()];
+        Arrays.fill(visited,0);
+        for(int i=2;i<graph.size();i++){
+            if(visited[i]!=1){
+                dfsTopoSort(graph,i,visited);
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -408,12 +427,11 @@ public class GraphSeries {
         graph.get(6).add(4);
         graph.get(6).add(5);
 
-        directedGraph.get(1).add(2);
         directedGraph.get(2).add(3);
         directedGraph.get(3).add(4);
         directedGraph.get(4).add(5);
         directedGraph.get(5).add(6);
-        directedGraph.get(6).add(2);
+        directedGraph.get(2).add(6);
 
         GraphSeries g=new GraphSeries();
         System.out.println("Displaying Graph: ");
@@ -462,5 +480,8 @@ public class GraphSeries {
 
         System.out.print("To check if Directed Graph is cyclic or not: ");
         g.cycleInDirectedGraph(directedGraph);
+
+        System.out.print("Topological sort using Dfs: ");
+        g.topologicalSortDfs(directedGraph);
     }
 }
