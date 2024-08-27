@@ -346,11 +346,46 @@ public class GraphSeries {
 
     }
 
+
+    public boolean dfsDirectedGraph(ArrayList<ArrayList<Integer> > graph,int src,int[] visited,int[] path){
+        visited[src]=1;
+        path[src]=1;
+        for(int it: graph.get(src)){
+            if(visited[it]!=1){
+                if(dfsDirectedGraph(graph,it,visited,path)) return true;
+            } else if(path[it]==1){
+                return true;
+            }
+        }
+        path[src]=0;
+        return false;
+    }
+
+    public void cycleInDirectedGraph(ArrayList<ArrayList<Integer> > graph){
+        int[] visited=new int[graph.size()];
+        int[] path=new int[graph.size()];
+        Arrays.fill(visited,0);
+        Arrays.fill(path,0);
+
+        for(int i=1;i<graph.size();i++){
+            if(visited[i]!=1){
+                if(dfsDirectedGraph(graph,i,visited,path)){
+                    System.out.println("Cycle Detected");
+                    return;
+                }
+            }
+        }
+        System.out.println("Cycle not Detected");
+    }
+
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
+        ArrayList<ArrayList<Integer> > directedGraph=new ArrayList<>();
         for(int i=0;i<=6;i++){
             graph.add(new ArrayList<>());
+            directedGraph.add(new ArrayList<>());
         }
 
         graph.get(1).add(2);
@@ -372,6 +407,13 @@ public class GraphSeries {
 
         graph.get(6).add(4);
         graph.get(6).add(5);
+
+        directedGraph.get(1).add(2);
+        directedGraph.get(2).add(3);
+        directedGraph.get(3).add(4);
+        directedGraph.get(4).add(5);
+        directedGraph.get(5).add(6);
+        directedGraph.get(6).add(2);
 
         GraphSeries g=new GraphSeries();
         System.out.println("Displaying Graph: ");
@@ -417,5 +459,8 @@ public class GraphSeries {
 
         System.out.print("To check if graph is bipartite or not using dfs: ");
         g.isBipartiteUsingDfs(graph);
+
+        System.out.print("To check if Directed Graph is cyclic or not: ");
+        g.cycleInDirectedGraph(directedGraph);
     }
 }
