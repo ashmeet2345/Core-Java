@@ -425,6 +425,47 @@ public class GraphSeries {
         ans.stream().forEach(s-> System.out.print(s+" "));
     }
 
+    public void courseSchedule1And2(ArrayList<Pair> schedule, int V){
+        ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
+        for(int i=0;i<=V;i++){
+            graph.add(new ArrayList<>());
+        }
+        int m=schedule.size();
+        for(int i=1;i<m;i++){
+            graph.get(schedule.get(i).i).add(schedule.get(i).j);
+        }
+        int[] indegree=new int[V];
+        Arrays.fill(indegree,0);
+        for(int i=1;i<V;i++){
+            for(int it: graph.get(i)){
+                indegree[it]++;
+            }
+        }
+
+        Queue<Integer> queue=new ArrayDeque<>();
+        for(int i=1;i<V;i++){
+            if(indegree[i]==0){
+                queue.add(i);
+            }
+        }
+        ArrayList<Integer> topo=new ArrayList<>();
+        while(queue.size()>0){
+            int node=queue.poll();
+            topo.add(node);
+            for(int it:graph.get(node)){
+                indegree[it]--;
+                if(indegree[it]==0) queue.add(it);
+            }
+        }
+
+        if(topo.size()+1==V){
+            System.out.println("It is possible");
+            return;
+        } else {
+            System.out.println("Not possible");
+        }
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -514,5 +555,12 @@ public class GraphSeries {
         System.out.println();
         System.out.print("Topological sort using Bfs: ");
         g.topologicalSortBfs(directedGraph,2);
+
+        System.out.println("\nCourse Schedule possible: ");
+        ArrayList<Pair> schedule=new ArrayList<>();
+        schedule.add(new Pair(1,0));
+        schedule.add(new Pair(2,1));
+        schedule.add(new Pair(3,2));
+        g.courseSchedule1And2(schedule,schedule.size());
     }
 }
