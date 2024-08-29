@@ -555,6 +555,34 @@ public class GraphSeries {
 
     }
 
+    public int wordLadderI(String startword, String endWord, ArrayList<String> wordList){
+        Queue<Tuple<String, Integer> > queue=new ArrayDeque<>();
+        queue.add(new Tuple<>(startword,1));
+        Set<String> set=new HashSet<>();
+        for(int i=0;i<wordList.size();i++){
+            set.add(wordList.get(i));
+        }
+        set.remove(startword);
+        while(queue.size()>0){
+            Tuple tuple=queue.poll();
+            String word=(String) tuple.i;
+            Integer steps=(Integer) tuple.j;
+            if(word.equals(endWord)==true) return steps;
+            for(int i=0;i<word.length();i++){
+                for(char ch='a';ch<='z';ch++){
+                    char[] initialWord=word.toCharArray();
+                    initialWord[i]=ch;
+                    String newWord=new String(initialWord);
+                    if(set.contains(newWord)==true){
+                        set.remove(newWord);
+                        queue.add(new Tuple<>(newWord,steps+1));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
@@ -675,5 +703,10 @@ public class GraphSeries {
 
         System.out.print("\nShortest Path in directed Acyclic graph: ");
         g.shortestPathInDAG(weightedDirectedGraph,6);
+
+        System.out.print("\nWord Ladder I: ");
+        ArrayList<String> arrayList=new ArrayList<>();
+        arrayList.addAll(Arrays.asList("log","hog","mog","dog"));
+        System.out.println(g.wordLadderI("hog","dog",arrayList));
     }
 }
