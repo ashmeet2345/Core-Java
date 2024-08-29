@@ -4,10 +4,8 @@ import Fundamentals.Arr;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 public class GraphSeries {
@@ -16,6 +14,15 @@ public class GraphSeries {
         int i;
         int j;
         Pair(int i,int j){
+            this.i=i;
+            this.j=j;
+        }
+    }
+
+    public static class Tuple<K,V>{
+        K i;
+        V j;
+        Tuple(K i, V j){
             this.i=i;
             this.j=j;
         }
@@ -511,13 +518,52 @@ public class GraphSeries {
         topo.stream().forEach(s-> System.out.print((char)(s+1+2*'0')+" "));
     }
 
+    public void topoDfs(ArrayList<ArrayList<Pair> > graph,int src,Stack<Integer> st, int[] visited){
+        visited[src]=1;
+        for(Pair it: graph.get(src)){
+            int dst=it.i;
+            if(visited[dst]!=1){
+                topoDfs(graph,dst,st,visited);
+            }
+        }
+        st.push(src);
+    }
+
+    public void shortestPathInDAG(ArrayList<ArrayList<Pair> > graph,int src){
+        int[] visited=new int[graph.size()];
+        Stack<Integer> st=new Stack<>();
+        for(int i=0; i<=6;i++){
+            if(visited[i]!=1){
+                topoDfs(graph,i,st,visited);
+            }
+        }
+        int[] dist=new int[graph.size()];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+
+        while(st.size()>0){
+            int node=st.pop();
+            if(node==src){
+                dist[node]=0;
+            }
+
+            for (Pair it : graph.get(node)) {
+                dist[it.i] = Math.min(dist[it.i], dist[node] + it.j);
+            }
+        }
+
+        Arrays.stream(dist).forEach(s-> System.out.print(s+" "));
+
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
         ArrayList<ArrayList<Integer> > directedGraph=new ArrayList<>();
+        ArrayList<ArrayList<Pair> > weightedDirectedGraph=new ArrayList<>();
         for(int i=0;i<=6;i++){
             graph.add(new ArrayList<>());
             directedGraph.add(new ArrayList<>());
+            weightedDirectedGraph.add(new ArrayList<>());
         }
 
         graph.get(1).add(2);
@@ -540,11 +586,21 @@ public class GraphSeries {
         graph.get(6).add(4);
         graph.get(6).add(5);
 
+
         directedGraph.get(2).add(3);
         directedGraph.get(3).add(4);
         directedGraph.get(4).add(5);
         directedGraph.get(5).add(6);
         directedGraph.get(2).add(6);
+
+        weightedDirectedGraph.get(0).add(new Pair(1,2));
+        weightedDirectedGraph.get(1).add(new Pair(3,1));
+        weightedDirectedGraph.get(2).add(new Pair(3,3));
+        weightedDirectedGraph.get(4).add(new Pair(0,3));
+        weightedDirectedGraph.get(4).add(new Pair(2,1));
+        weightedDirectedGraph.get(5).add(new Pair(4,1));
+        weightedDirectedGraph.get(6).add(new Pair(4,2));
+        weightedDirectedGraph.get(6).add(new Pair(5,3));
 
         GraphSeries g=new GraphSeries();
         System.out.println("Displaying Graph: ");
@@ -616,5 +672,8 @@ public class GraphSeries {
         list.add("cad");
         System.out.println("Alien Dictionary: ");
         g.alienDictionary(list,4);
+
+        System.out.print("\nShortest Path in directed Acyclic graph: ");
+        g.shortestPathInDAG(weightedDirectedGraph,6);
     }
 }
