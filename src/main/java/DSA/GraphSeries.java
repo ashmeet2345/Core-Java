@@ -10,12 +10,18 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class GraphSeries {
 
-    public static class Pair{
+    public static class Pair implements Comparable<Pair>{
         int i;
         int j;
         Pair(int i,int j){
             this.i=i;
             this.j=j;
+        }
+
+
+        @Override
+        public int compareTo(Pair o) {
+            return this.i-o.i;
         }
     }
 
@@ -558,7 +564,7 @@ public class GraphSeries {
     public int wordLadderI(String startword, String endWord, ArrayList<String> wordList){
         Queue<Tuple<String, Integer> > queue=new ArrayDeque<>();
         queue.add(new Tuple<>(startword,1));
-        Set<String> set=new HashSet<>();
+         Set<String> set=new HashSet<>();
         for(int i=0;i<wordList.size();i++){
             set.add(wordList.get(i));
         }
@@ -583,15 +589,42 @@ public class GraphSeries {
         return 0;
     }
 
+    public void dijkstraAlgorithmUsingPQ(ArrayList<ArrayList<Pair> > graph, int src){
+        int[] dist=new int[graph.size()];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        PriorityQueue<Pair> pq=new PriorityQueue<>();
+        pq.add(new Pair(src,0));
+        dist[src]=0;
+
+        while(pq.size()>0){
+            Pair it=pq.poll();
+            int dis=it.j;
+            int node=it.i;
+            for(Pair i: graph.get(node)){
+                int newWeight=i.j;
+                int adjNode=i.i;
+
+                if(dis+newWeight < dist[adjNode]){
+                    dist[adjNode]=dis+newWeight;
+                    pq.add(new Pair(adjNode,dist[adjNode]));
+                }
+            }
+        }
+
+        Arrays.stream(dist).forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Integer> > graph=new ArrayList<>();
         ArrayList<ArrayList<Integer> > directedGraph=new ArrayList<>();
         ArrayList<ArrayList<Pair> > weightedDirectedGraph=new ArrayList<>();
+        ArrayList<ArrayList<Pair> > weightedGraph=new ArrayList<>();
         for(int i=0;i<=6;i++){
             graph.add(new ArrayList<>());
             directedGraph.add(new ArrayList<>());
             weightedDirectedGraph.add(new ArrayList<>());
+            weightedGraph.add(new ArrayList<>());
         }
 
         graph.get(1).add(2);
@@ -629,6 +662,25 @@ public class GraphSeries {
         weightedDirectedGraph.get(5).add(new Pair(4,1));
         weightedDirectedGraph.get(6).add(new Pair(4,2));
         weightedDirectedGraph.get(6).add(new Pair(5,3));
+
+        weightedGraph.get(0).add(new Pair(1,1));
+        weightedGraph.get(0).add(new Pair(2,1));
+        weightedGraph.get(0).add(new Pair(3,2));
+        weightedGraph.get(1).add(new Pair(0,1));
+        weightedGraph.get(1).add(new Pair(3,2));
+        weightedGraph.get(2).add(new Pair(0,1));
+        weightedGraph.get(2).add(new Pair(3,3));
+        weightedGraph.get(3).add(new Pair(1,2));
+        weightedGraph.get(3).add(new Pair(0,2));
+        weightedGraph.get(3).add(new Pair(2,3));
+        weightedGraph.get(3).add(new Pair(6,3));
+        weightedGraph.get(3).add(new Pair(4,3));
+        weightedGraph.get(4).add(new Pair(3,3));
+        weightedGraph.get(4).add(new Pair(5,1));
+        weightedGraph.get(5).add(new Pair(4,1));
+        weightedGraph.get(5).add(new Pair(6,4));
+        weightedGraph.get(6).add(new Pair(5,4));
+        weightedGraph.get(6).add(new Pair(3,3));
 
         GraphSeries g=new GraphSeries();
         System.out.println("Displaying Graph: ");
@@ -708,5 +760,8 @@ public class GraphSeries {
         ArrayList<String> arrayList=new ArrayList<>();
         arrayList.addAll(Arrays.asList("log","hog","mog","dog"));
         System.out.println(g.wordLadderI("hog","dog",arrayList));
+
+        System.out.println("Dijkstra Algorithm using Priority Queue: ");
+        g.dijkstraAlgorithmUsingPQ(weightedGraph,0);
     }
 }
