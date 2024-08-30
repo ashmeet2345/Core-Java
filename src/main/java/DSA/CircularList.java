@@ -13,10 +13,6 @@ public class CircularList {
             this.data=data;
         }
 
-        public Node(int data,Node next) {
-            this.data=data;
-            this.next = next;
-        }
     }
 
     public void insertFirst(int val){
