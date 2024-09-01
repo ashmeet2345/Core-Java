@@ -1,9 +1,20 @@
 package DSA;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class SlidingWindow {
+
+    public static class Pair{
+        int i;
+        int j;
+        Pair(int i,int j){
+            this.i=i;
+            this.j=j;
+        }
+    }
 
     public void maxSumInWindowOfSizeK(int[] arr,int k){
         int mxsum=Integer.MIN_VALUE;
@@ -118,8 +129,39 @@ public class SlidingWindow {
                 mxLen=len;
             }
         }
-
         System.out.println(mxLen);
+    }
+
+    public void fruitIntoBaskets(int[] arr){
+
+        Map<Integer,Integer> mp=new HashMap<>();
+
+        int mxCount=Integer.MIN_VALUE;
+        int cnt=0;
+        int i=0;
+        int j=0;
+        while(i<arr.length && i>=j){
+             if(mp.size()<=2){
+                 mp.put(arr[i],mp.getOrDefault(arr[i],0)+1);
+                 cnt++;
+                 i++;
+             }
+
+             if(mp.size()>2){
+                 int count=mp.get(arr[j]);
+                 if(count>1){
+                     mp.put(arr[j],count-1);
+                 } else {
+                     mp.remove(arr[j]);
+                 }
+                 cnt--;
+                 j++;
+             }
+             if(cnt>mxCount){
+                 mxCount=cnt;
+             }
+        }
+        System.out.print(mxCount);
     }
 
     public static void main(String[] args) {
@@ -138,5 +180,8 @@ public class SlidingWindow {
 
         System.out.println("\nMaximum consecutive ones III: ");
         window.maximumConsecutiveOnesIII(new int[]{1,1,1,0,0,0,0,1,1,1,1,1},3);
+
+        System.out.println("\nFruit Into Basket: ");
+        window.fruitIntoBaskets(new int[]{3,3,3,1,1,1,1,3,3,4});
     }
 }
