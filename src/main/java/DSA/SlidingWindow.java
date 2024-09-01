@@ -92,6 +92,36 @@ public class SlidingWindow {
         System.out.println(res);
     }
 
+    public void maximumConsecutiveOnesIII(int[] arr, int k){
+        int len=0;
+        int mxLen=Integer.MIN_VALUE;
+        int convert0To1=0;
+        int i=0, j=0;
+        while(i<arr.length && i>=j){
+            if(arr[i]==1){
+                len+=1;
+                i++;
+            } else {
+                if(convert0To1<k){
+                    convert0To1+=1;
+                    len+=1;
+                    i++;
+                } else {
+                    if(arr[j]==0){
+                        convert0To1--;
+                    }
+                    len--;
+                    j++;
+                }
+            }
+            if(len>mxLen){
+                mxLen=len;
+            }
+        }
+
+        System.out.println(mxLen);
+    }
+
     public static void main(String[] args) {
         SlidingWindow window=new SlidingWindow();
         System.out.println("Maximum sum in windows of size K: ");
@@ -105,5 +135,8 @@ public class SlidingWindow {
 
         System.out.println("\nLongest Substring without repeating characters: ");
         window.longestSubstringWithoutRepeatingCharacters("caddbzabcd");
+
+        System.out.println("\nMaximum consecutive ones III: ");
+        window.maximumConsecutiveOnesIII(new int[]{1,1,1,0,0,0,0,1,1,1,1,1},3);
     }
 }
