@@ -161,7 +161,36 @@ public class SlidingWindow {
                  mxCount=cnt;
              }
         }
-        System.out.print(mxCount);
+        System.out.println(mxCount);
+    }
+
+    public void longestSubstringWithAtmostKDistinctCharacters(String s, int k){
+        Map<Character,Integer> mp=new HashMap<>();
+        int count=0;
+        int mxLen=0;
+        int i=0;
+        int j=0;
+        while(i>=j && i<s.length()){
+            if(mp.size()<=k){
+                mp.put(s.charAt(i),mp.getOrDefault(s.charAt(i),0)+1);
+                count++;
+                i++;
+            }
+            if(mp.size()>k){
+                int cnt=mp.get(s.charAt(j));
+                if(cnt>1){
+                    mp.put(s.charAt(j),cnt-1);
+                } else {
+                    mp.remove(s.charAt(j));
+                }
+                count--;
+                j++;
+            }
+            if(count>mxLen){
+                mxLen=count;
+            }
+        }
+        System.out.println(mxLen);
     }
 
     public static void main(String[] args) {
@@ -183,5 +212,8 @@ public class SlidingWindow {
 
         System.out.println("\nFruit Into Basket: ");
         window.fruitIntoBaskets(new int[]{3,3,3,1,1,1,1,3,3,4});
+
+        System.out.println("\nLongest Substring with At most K distinct Characters: ");
+        window.longestSubstringWithAtmostKDistinctCharacters("aacacccd",3);
     }
 }
