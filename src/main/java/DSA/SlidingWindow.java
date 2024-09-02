@@ -215,6 +215,10 @@ public class SlidingWindow {
         System.out.println(count);
     }
 
+    public void longestRepeatingCharacterReplacement(String str, int k){
+
+    }
+
     public static void main(String[] args) {
         SlidingWindow window=new SlidingWindow();
         System.out.println("Maximum sum in windows of size K: ");
