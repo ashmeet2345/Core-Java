@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -69,5 +66,13 @@ public class Streaming {
         System.out.println("\n"+sum);
 
         users.parallelStream().forEach(user -> System.out.println(user));
+
+        Map<Integer,Integer> map=new HashMap<>();
+        map.put(1,2);
+        map.put(2,5);
+        map.put(3,3);
+
+        System.out.println("Maximum value of the map isL ");
+        System.out.println(map.entrySet().stream().mapToInt(x->x.getValue()).max().getAsInt());
     }
 }
