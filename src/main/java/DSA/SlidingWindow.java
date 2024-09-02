@@ -215,8 +215,43 @@ public class SlidingWindow {
         System.out.println(count);
     }
 
-    public void longestRepeatingCharacterReplacement(String str, int k){
+    public void countSubarraySumEqualsK(int[] arr, int k){
+        int sumYet=0;
+        int count=0;
+        for(int i=0;i<arr.length;i++){
+            if(sumYet>=0){
+                sumYet+=arr[i];
+            } else {
+                sumYet=0;
+            }
+            if(sumYet >= k){
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
 
+    public int findAllSubarraysWithGivenSum(int arr[], int k) {
+        int n = arr.length; // size of the given array.
+        Map<Integer,Integer> mpp = new HashMap();
+        int preSum = 0, cnt = 0;
+
+        mpp.put(0, 1); // Setting 0 in the map.
+        for (int i = 0; i < n; i++) {
+            // add current element to prefix Sum:
+            preSum += arr[i];
+
+            // Calculate x-k:
+            int remove = preSum - k;
+
+            // Add the number of subarrays to be removed:
+            cnt += mpp.getOrDefault(remove, 0);
+
+            // Update the count of prefix sum
+            // in the map.
+            mpp.put(preSum, mpp.getOrDefault(preSum, 0) + 1);
+        }
+        return cnt;
     }
 
     public static void main(String[] args) {
@@ -244,5 +279,11 @@ public class SlidingWindow {
 
         System.out.println("\nNumber of substring containing all three characters: ");
         window.numberOfSubstringsContainingAllThreeCharacters("bbacba");
+
+        System.out.println("\nCount Subarray sum Equals K: ");
+        window.countSubarraySumEqualsK(new int[]{3,1,2,4},6);
+
+        System.out.println("\nStrivers answer: ");
+        System.out.println(window.findAllSubarraysWithGivenSum(new int[]{3,1,2,4},6));
     }
 }
