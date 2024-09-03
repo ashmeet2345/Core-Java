@@ -72,7 +72,15 @@ public class Streaming {
         map.put(2,5);
         map.put(3,3);
 
-        System.out.println("Maximum value of the map isL ");
+        System.out.println("Maximum value of the map is: ");
         System.out.println(map.entrySet().stream().mapToInt(x->x.getValue()).max().getAsInt());
+
+        Stream<Double> randoms = Stream.generate(Math::random).limit(5);
+        randoms.forEach(consume);
+
+        System.out.println();
+        List<String> words = Arrays.asList("java", "streams", "are", "powerful");
+        words.stream().map(t -> t.toUpperCase()).forEach(x -> System.out.print(x+" "));
+
     }
 }
