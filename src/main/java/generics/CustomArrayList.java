@@ -53,13 +53,14 @@ public class CustomArrayList<T>{
     public static void main(String[] args) {
         ArrayList<Integer> list=new ArrayList<>();
         int[] data={50,60,70,80,90,100};
+
         Arrays.stream(data).forEach(s->list.add(s));
         System.out.println(list);
 
         CustomArrayList<Integer> l=new CustomArrayList<>();
-       /* l.add(10);
+        l.add(10);
         l.add(20);
-        l.add(30);*/
+        l.add(30);
         List<Float> list2=new ArrayList<>();
         List<Double> list3=new ArrayList<>();
         List<Long> list4=new ArrayList<>();
