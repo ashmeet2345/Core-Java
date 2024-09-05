@@ -27,6 +27,40 @@ public class Streaming {
         List<String> email;
     }
 
+    static int cntWays(int arr[], int n)
+    {
+        // if length of array is 1
+        // answer will be 0 as we have
+        // to split it into two
+        // non-empty halves
+        if (n == 1)
+        {
+            return 0;
+        }
+
+        // variables to store total sum,
+        // current sum and count
+        int tot_sum = 0, sum = 0, ans = 0;
+
+        // finding total sum
+        for (int i = 0; i < n; i++)
+        {
+            tot_sum += arr[i];
+        }
+
+        // checking if sum equals total_sum/2
+        for (int i = 0; i < n - 1; i++)
+        {
+            sum += arr[i];
+            if (sum == tot_sum / 2)
+            {
+                ans++;
+            }
+        }
+
+        return ans;
+    }
+
     public static void main(String[] args) {
         List<User> users=new ArrayList<>();
         users.add(new User("user1","12345",List.of("abc@xyz","cde@fgh")));
