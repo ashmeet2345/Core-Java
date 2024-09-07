@@ -42,7 +42,9 @@ public class Main {
         System.out.println(future.get());
         execute.shutdown();
 
-        ExecutorService execute2=Executors.newFixedThreadPool(3);
+        ExecutorService execute2=Executors.newCachedThreadPool();
+        //New cached thread pool is required when we don't know the size of a thread pool, and want our thread
+        //to be efficiently ran. So it is upto the cached thread pool.
         Callable<Integer> a=()->1;
         Callable<Integer> b=()->2;
         Callable<Integer> c=()->3;
