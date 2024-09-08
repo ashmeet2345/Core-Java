@@ -112,9 +112,9 @@ public class BinarySearchTree {
         tree.insert(33);
         tree.insert(37);
 
-       // Node node=tree.delete(root,37);
-       // tree.replaceSumOfLarger(root);
-       // System.out.println(root.left.left.data);
+        Node node=tree.delete(root,37);
+        tree.replaceSumOfLarger(root);
+        System.out.println(root.left.left.data);
 
         System.out.println(tree.lowestCommonAncestor(root,33,37));
     }
