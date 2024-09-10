@@ -3,8 +3,9 @@ package DSA.Tree;
 import DSA.BinaryTrees;
 import MultiThreading.NewMultiThreading.B;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BinaryTree {
 
@@ -100,6 +101,60 @@ public class BinaryTree {
         }
     }
 
+    public void IterativePreOrder(Node temp){
+        Stack<Node> st=new Stack<>();
+        st.add(temp);
+        while(st.size()>0){
+            Node top=st.pop();
+            System.out.print(top.data+" ");
+            if(top.right!=null){
+                st.add(top.right);
+            }
+            if(top.left!=null){
+                st.add(top.left);
+            }
+        }
+    }
+
+    public void IterativeInOrder(Node root){
+        Stack<Node> st=new Stack<>();
+        Node temp=root;
+        while(true){
+            if(temp!=null){
+                st.push(temp);
+                temp=temp.left;
+            } else {
+                if(st.size()==0)
+                    break;
+                temp=st.pop();
+                System.out.print(temp.data+" ");
+                temp=temp.right;
+            }
+        }
+    }
+
+    public void IterativePostOrder(Node root){
+        Stack<Node> st=new Stack<>();
+        ArrayList<Integer> ans=new ArrayList<>();
+        st.push(root);
+        while(st.size()>0){
+            Node top=st.pop();
+            if(top.left!=null){
+                st.push(top.left);
+            }
+            if(top.right!=null){
+                st.push(top.right);
+            }
+            ans.add(top.data);
+        }
+
+        List<Integer> reversed= IntStream.rangeClosed(1,ans.size())
+                .mapToObj(i->ans.get(ans.size()-i))
+                .collect(Collectors.toList());
+
+        reversed.iterator().forEachRemaining(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -122,6 +177,13 @@ public class BinaryTree {
         System.out.print("\nLevel order: ");
         tree.levelOrder(root);
 
+        System.out.print("\nIterative Preorder: ");
+        tree.IterativePreOrder(root);
 
+        System.out.print("\nIterative Inorder: ");
+        tree.IterativeInOrder(root);
+
+        System.out.print("\nIterative Postorder: ");
+        tree.IterativePostOrder(root);
     }
 }
