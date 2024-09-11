@@ -2,6 +2,7 @@ package DSA.Tree;
 
 import DSA.BinaryTrees;
 import MultiThreading.NewMultiThreading.B;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -155,6 +156,69 @@ public class BinaryTree {
         reversed.iterator().forEachRemaining(s-> System.out.print(s+" "));
     }
 
+    static int diameter=Integer.MIN_VALUE;
+    public int maximumDepthInBinaryTree(Node root){
+        if(root==null){
+            return 0;
+        }
+        int left=maximumDepthInBinaryTree(root.left);
+        int right=maximumDepthInBinaryTree(root.right);
+        diameter=Math.max(diameter,left+right);
+        return Math.max(left,right)+1;
+    }
+
+    public boolean balancedBinaryTree(Node root){
+        return Math.abs(maximumDepthInBinaryTree(root.left)-maximumDepthInBinaryTree(root.right)) <= 1 ? true : false;
+    }
+
+    public int diameterOfBinaryTree(Node root){
+        maximumDepthInBinaryTree(root);
+        return diameter+1;
+    }
+
+    static int pathSum=Integer.MIN_VALUE;
+    public int maximumPathSum(Node root){
+        if(root == null){
+            return 0;
+        }
+        int left=maximumPathSum(root.left);
+        int right=maximumPathSum(root.right);
+        pathSum=Math.max(pathSum,left+right+root.data);
+        return Math.max(left,right)+root.data;
+    }
+
+    public void zigZagPattern(Node root){
+      Stack<Node> st1=new Stack<>();
+      Stack<Node> st2=new Stack<>();
+      st1.add(root);
+      int level=1;
+      while(st1.size()>0){
+          if(level%2!=0){
+              while(st1.size()>0){
+                  Node top=st1.pop();
+                  System.out.print(top.data+" ");
+                  if(top.left!=null) st2.add(top.left);
+                  if(top.right!=null) st2.add(top.right);
+              }
+              System.out.println();
+              st1=st2;
+              st2=new Stack<>();
+              level++;
+          } else {
+              while(st1.size()>0){
+                  Node top=st1.pop();
+                  System.out.print(top.data+" ");
+                  if(top.right!=null) st2.add(top.right);
+                  if(top.left!=null) st2.add(top.left);
+              }
+              System.out.println();
+              st1=st2;
+              st2=new Stack<>();
+              level++;
+          }
+      }
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -164,6 +228,8 @@ public class BinaryTree {
         tree.insert(root, 50);
         tree.insert(root, 60);
         tree.insert(root, 70);
+        tree.insert(root, 80);
+
 
         System.out.print("\nRecursive Inorder: ");
         tree.inOrder(root);
@@ -185,5 +251,22 @@ public class BinaryTree {
 
         System.out.print("\nIterative Postorder: ");
         tree.IterativePostOrder(root);
+
+        System.out.print("\nMaximum Depth of a Binary Tree: ");
+        System.out.println(tree.maximumDepthInBinaryTree(root));
+
+        System.out.print("\nIf a tree is a balanced binary tree: ");
+        System.out.println(tree.balancedBinaryTree(root));
+
+        System.out.print("\nDiameter of Binary Tree: ");
+        System.out.println(tree.diameterOfBinaryTree(root));
+
+        System.out.print("\nMaximum Path sum: ");
+        tree.maximumPathSum(root);
+        System.out.println(pathSum);
+
+        System.out.println("\nZig-Zag traversal");
+        tree.zigZagPattern(root);
+
     }
 }
