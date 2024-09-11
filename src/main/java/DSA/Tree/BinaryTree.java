@@ -219,6 +219,46 @@ public class BinaryTree {
       }
     }
 
+    static ArrayList<Integer> left=new ArrayList<>();
+    public void leftBorder(Node root){
+        if(root.left == null && root.right == null){
+            return;
+        }
+        left.add(root.data);
+        leftBorder(root.left);
+    }
+
+    static ArrayList<Integer> right=new ArrayList<>();
+    public void rightBorder(Node root){
+        if(root.left == null && root.right == null){
+            return;
+        }
+        rightBorder(root.right);
+        right.add(root.data);
+    }
+
+    static ArrayList<Integer> leaf=new ArrayList<>();
+    public void leafBorder(Node root){
+        if(root==null){
+            return;
+        }
+        if(root.left==null && root.right==null){
+            leaf.add(root.data);
+            return;
+        }
+        if(root.left!=null) leafBorder(root.left);
+        if(root.right!=null) leafBorder(root.right);
+    }
+    public void boundaryTraversal(Node root){
+        leftBorder(root);
+        rightBorder(root);
+        leafBorder(root);
+
+        left.stream().forEach(i-> System.out.print(i+" "));
+        leaf.stream().forEach(j-> System.out.print(j+" "));
+        right.stream().forEach(k-> System.out.print(k+" "));
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -229,6 +269,9 @@ public class BinaryTree {
         tree.insert(root, 60);
         tree.insert(root, 70);
         tree.insert(root, 80);
+        tree.insert(root, 90);
+        tree.insert(root, 100);
+        tree.insert(root, 110);
 
 
         System.out.print("\nRecursive Inorder: ");
@@ -268,5 +311,7 @@ public class BinaryTree {
         System.out.println("\nZig-Zag traversal");
         tree.zigZagPattern(root);
 
+        System.out.println("\nBoundary Traversal: ");
+        tree.boundaryTraversal(root);
     }
 }
