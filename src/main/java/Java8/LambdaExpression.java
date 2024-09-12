@@ -8,10 +8,16 @@ public class LambdaExpression{
     public static void main(String[] args) {
         //to convert a function interface into a lambda expression (parameters)   ->  {body}
 
-        FunctionaInterface face=() -> {
+       /* FunctionaInterface face=() -> {
             System.out.println("Hello, I am the only abstract method in the interface.");
+        };*/
+
+        /*face.m1();*/
+
+        FunctionaInterface face=(int a,int b) -> {
+            System.out.println(a+b);
         };
 
-        face.m1();
+        face.sum(20,30);
     }
 }

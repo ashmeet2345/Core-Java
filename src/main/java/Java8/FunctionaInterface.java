@@ -6,6 +6,7 @@ public interface FunctionaInterface {
     // default and static methods.
     //Example - Runnable, Callable, Comparable, Comparator
 
-    void m1();
+    //void m1();
 
+    void sum(int a,int b);
 }
