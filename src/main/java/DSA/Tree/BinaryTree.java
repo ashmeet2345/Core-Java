@@ -2,6 +2,7 @@ package DSA.Tree;
 
 import DSA.BinaryTrees;
 import MultiThreading.NewMultiThreading.B;
+import MultiThreading.NewMultiThreading.Priority;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
@@ -9,6 +10,26 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BinaryTree {
+    public class Pair{
+        int vertical;
+        int level;
+
+        public Pair(int vertical, int level){
+            this.vertical=vertical;
+            this.level=level;
+        }
+    }
+
+    public class Tuple<Node,Pair>{
+        Node node;
+        Pair pair;
+
+        public Tuple(Node node, Pair pair){
+            this.node=node;
+            this.pair=pair;
+        }
+
+    }
 
     public class Node{
         int data;
@@ -249,6 +270,7 @@ public class BinaryTree {
         if(root.left!=null) leafBorder(root.left);
         if(root.right!=null) leafBorder(root.right);
     }
+
     public void boundaryTraversal(Node root){
         leftBorder(root);
         rightBorder(root);
@@ -257,6 +279,19 @@ public class BinaryTree {
         left.stream().forEach(i-> System.out.print(i+" "));
         leaf.stream().forEach(j-> System.out.print(j+" "));
         right.stream().forEach(k-> System.out.print(k+" "));
+    }
+
+    public void verticalTraversal(Node root){
+        Queue<Tuple<Node,Pair>> queue=new ArrayDeque<>();
+        queue.add(new Tuple<>(root,new Pair(0,0)));
+        Map<Integer,PriorityQueue<Pair> > mp=new HashMap<>();
+
+        while(queue.size()>0){
+            Tuple top=queue.poll();
+            Pair pair= (Pair) top.pair;
+            //to be done later
+        }
+
     }
 
     public static void main(String[] args) {

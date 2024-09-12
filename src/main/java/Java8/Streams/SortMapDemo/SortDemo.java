@@ -1,4 +1,4 @@
-package Java8.Streams;
+package Java8.Streams.SortMapDemo;
 
 import Java8.Compare.Book;
 
