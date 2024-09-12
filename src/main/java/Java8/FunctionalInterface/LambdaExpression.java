@@ -1,4 +1,4 @@
-package Java8;
+package Java8.FunctionalInterface;
 
 public class LambdaExpression{
     //Expression through which we can represent an anonymous function
@@ -14,7 +14,7 @@ public class LambdaExpression{
 
         /*face.m1();*/
 
-        FunctionaInterface face=(int a,int b) -> {
+        FunctionaInterface face=(int a, int b) -> {
             System.out.println(a+b);
         };
 

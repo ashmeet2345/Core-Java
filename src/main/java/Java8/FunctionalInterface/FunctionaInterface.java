@@ -1,4 +1,4 @@
-package Java8;
+package Java8.FunctionalInterface;
 
 public interface FunctionaInterface {
     //abstract void single();
