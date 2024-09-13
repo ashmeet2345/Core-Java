@@ -2,6 +2,8 @@ package Java8.PredefineDFunctionalInterfaces;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class SupplierDemo /*implements Supplier<String>*/ {
@@ -24,6 +26,13 @@ public class SupplierDemo /*implements Supplier<String>*/ {
         List<String> list= Arrays.asList();
         System.out.println(list.stream().findAny().orElseGet(supplier));
 
+        String s1=null;
+        String s2="abc";
+        if(Objects.equals(s1,s2)){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
 
 
     }
