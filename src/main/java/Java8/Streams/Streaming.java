@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -96,11 +97,45 @@ public class Streaming {
         System.out.println(res);
     }
 
+    public void usingStringJoin(){
+        List<String> list=Arrays.asList("1","2","3","4");
+        String str=String.join("-",list);
+        System.out.println(str);
+    }
+
     public void longestStringInAGivenArray(String[] arr){
         String str=Arrays.stream(arr)
                 .reduce((word1,word2)->word1.length()>word2.length()?word1:word2)
                 .get();
         System.out.println(str);
+    }
+
+    public String swapping(String str){
+        char[] arr=str.toCharArray();
+        for(int i=0;i<arr.length;i++){
+            int val=(int)(arr[i])-(int)'0'*2-1;
+            arr[i]=(char)(122-val);
+        }
+        String s=new String(arr);
+        return s;
+    }
+
+    public void aliceAndMessages(String[] arr){
+        int n=arr.length;
+        int res=0;
+        Set<String> set=Arrays.stream(arr).collect(Collectors.toSet());
+        for(int i=0;i<n;i++){
+            String val=swapping(arr[i]);
+            if(set.contains(arr[i]) && set.contains(val)){
+                res++;
+                set.remove(arr[i]);
+                set.remove(val);
+            } else if(set.contains(arr[i])){
+                res++;
+            }
+        }
+
+        System.out.println(res);
     }
 
     public static void main(String[] args) {
@@ -183,7 +218,11 @@ public class Streaming {
 
         System.out.println();
         streaming.longestStringInAGivenArray(new String[]{"abc","asdasd","dasd","asasdfjjweieijfjn"});
+
+        System.out.println();
+        streaming.usingStringJoin();
+
+        System.out.println();
+        streaming.aliceAndMessages(new String[]{"aaa","pqrs","zzz"});
     }
-
-
 }
