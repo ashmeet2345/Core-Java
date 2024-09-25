@@ -5,9 +5,9 @@ public class Main {
        /* System.out.println("Main is starting");
       //  Thread thread1 = new Thread1("THREAD1");
         Thread thread2=new Thread(new Thread2(),"THREAD2");
-       // thread1.setDaemon(true); //If the main stops executing, then it might happen that this thread one
+       // thread1.setDaemon(true); //If the Main stops executing, then it might happen that this thread one
         //does not print all the values as daemon thread is executed on the mercy of the jvm machine
-      //  thread1.start(); //Thread 1 is a child of the main thread as thread 1 is spawned from the main thread
+      //  thread1.start(); //Thread 1 is a child of the Main thread as thread 1 is spawned from the Main thread
         thread2.start();
 
         //other way to implement Thread2 class is

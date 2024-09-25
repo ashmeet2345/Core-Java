@@ -28,6 +28,8 @@ public class SupplierDemo /*implements Supplier<String>*/ {
 
         String s1=null;
         String s2="abc";
+
+        //This is how me compare 2 strings if one of them could be null using equals operator only.
         if(Objects.equals(s1,s2)){
             System.out.println("True");
         } else {

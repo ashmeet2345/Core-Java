@@ -19,5 +19,4 @@ public class Daemon extends Thread{
         //So Daemon thread is a background thread only
 
     }
-
 }

@@ -12,6 +12,7 @@ public class BookService {
         List<Book> list=new BookDao().books();
         //As Comparator<T> is a functional interface, we will use lambda expression
         Collections.sort(list, (o1,o2) -> (int) (o1.getPrice()-o2.getPrice()));
+
         return list;
     }
 

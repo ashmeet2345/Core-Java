@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class CompletableFutureDemo {
-    //it is used for Async programming in Java. When the task is completed, it notifies the main
+    //it is used for Async programming in Java. When the task is completed, it notifies the Main
     //thread (whether the task completed or failed)
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -15,7 +15,7 @@ public class CompletableFutureDemo {
         * It cannot be manually completed
         * Multiple futures cannot be chained together
         * We cannot combine multiple futures together
-        * No proper Exception Handling Mechanish*/
+        * No proper Exception Handling Mechanism*/
 
         //Lets take an example of ExecutorService first
 
@@ -29,7 +29,7 @@ public class CompletableFutureDemo {
         System.out.println(list);
 
         //Now if instead of returning a list in the submit method, we do some api call, and it delays
-        //the response by 1 or 2 min (Lets say), the the main thread will have to wait for the
+        //the response by 1 or 2 min (Lets say), then the Main thread will have to wait for the
         //same delayed time. And we cannot complete the above future manually.
 
         //Now lets say we have multiple futures as future1, future2, future3 ... .If we want to combine
@@ -37,9 +37,11 @@ public class CompletableFutureDemo {
 
 
         CompletableFuture<String> completableFuture=new CompletableFuture<>();
-        //If we use get method using completable future, it will still block the main thread.
+        //If we use get method using completable future, it will still block the Main thread.
         //But using complete method, we can stop the executon of completable future, if it is taking
         //longer time.
+
+
 
 
     }
