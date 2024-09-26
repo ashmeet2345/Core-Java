@@ -1,14 +1,19 @@
 package DSA;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Array {
-    public static void main(String[] args) {
-       // sumOf2Arrays();
-       // diffOf2Arrays();
-        Array array=new Array();
-        int[] arr={5,10,15,20,25,30,35,40};
-        System.out.println(array.binarySearch(arr,40));
+
+    public class Pair<K,V> {
+        K key;
+        V value;
+
+        public Pair(K key, V value){
+            this.key=key;
+            this.value=value;
+        }
     }
 
     public boolean binarySearch(int[] a,int num){
@@ -67,7 +72,7 @@ public class Array {
         int j=a2.length-1;
         int k=diff.length-1;
         while (k >= 0) {
-           int c=j<0?0:a2[j];
+            int c=j<0?0:a2[j];
             if(a1[i]-c < 0){
                 a1[i]+=10;
                 diff[k]=a1[i]-c;
@@ -80,5 +85,13 @@ public class Array {
             k--;
         }
         return diff;
+    }
+
+    public static void main(String[] args) {
+       // sumOf2Arrays();
+       // diffOf2Arrays();
+        Array array=new Array();
+        int[] arr={5,10,15,20,25,30,35,40};
+        System.out.println(array.binarySearch(arr,40));
     }
 }
