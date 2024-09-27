@@ -209,6 +209,54 @@ public class HashmapsAndHeapsL2 {
         System.out.println(maxlen);
     }
 
+    public void countSubstringsWithoutRepeatingCharacters(String str){
+
+        Map<Character,Integer> mp=new HashMap<>();
+        int count=0;
+        int i=-1;
+        int j=-1;
+
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+            while(i<str.length()-1){
+                m1=true;
+                i++;
+                char ch=str.charAt(i);
+                if(!mp.containsKey(ch)){
+                    mp.put(ch,1);
+                    count+=(i-j);
+                } else {
+                    mp.put(ch,mp.getOrDefault(ch,0)+1);
+                    break;
+                }
+            }
+
+            while(j<=i && (mp.size() < (i-j))){
+                m2=true;
+                j++;
+                char ch=str.charAt(j);
+                int val=mp.get(ch);
+                if(val==1){
+                    mp.remove(ch);
+                } else if(val>1){
+                    mp.put(ch,mp.get(ch)-1);
+                }
+                if(mp.get(str.charAt(i)) == 1){
+                    count+=(i-j);
+                    break;
+                }
+
+            }
+            if(!m1 && !m2){
+                break;
+            }
+        }
+
+        System.out.println(count);
+    }
+
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -233,9 +281,11 @@ public class HashmapsAndHeapsL2 {
         System.out.print("Largest Subarray with sum 0: ");
         hash.largestSubarrayWithSum0(new int[]{2,8,-3,-5,2,-4,6,1,2,1,-3,4});
 
-        System.out.println("Minimum window substring I: ");
+       /* System.out.println("Minimum window substring I: ");
         hash.minimumWindowSubstring("dbaecbbabdcaafbddcabgba","abbcdc");
-        hash.longestSubstringWithoutRepeatingCharacters("dbaecbbabdcaafbddcabgba");
+        hash.longestSubstringWithoutRepeatingCharacters("dbaecbbabdcaafbddcabgba");*/
 
+        System.out.println("Count Substrings without Repeating Characters: ");
+        hash.countSubstringsWithoutRepeatingCharacters("abbd");
     }
 }
