@@ -240,7 +240,7 @@ public class HashmapsAndHeapsL2 {
                 if(val==1){
                     mp.remove(ch);
                 } else if(val>1){
-                    mp.put(ch,mp.get(ch)-1);
+                    mp.put(ch,val-1);
                 }
                 if(mp.get(str.charAt(i)) == 1){
                     count+=(i-j);
@@ -252,10 +252,49 @@ public class HashmapsAndHeapsL2 {
                 break;
             }
         }
-
         System.out.println(count);
     }
 
+
+    public void longestSubstringWithExactlyKDistinctCharacters(String str,int k){
+        Map<Character,Integer> mp=new HashMap<>();
+        int mxSize=Integer.MIN_VALUE;
+        int i=-1;
+        int j=-1;
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+            while(i<str.length()-1){
+                m1=true;
+                i++;
+                char ch=str.charAt(i);
+                mp.put(ch,mp.getOrDefault(ch,0)+1);
+                if(mp.size()>k){
+                    break;
+                }
+            }
+            mxSize=Math.max(i-j-1,mxSize);
+            while(j<=i && mp.size()>k){
+                m2=true;
+                j++;
+                char ch=str.charAt(j);
+                int val=mp.get(ch);
+                if(val>1){
+                    mp.put(ch,val-1);
+                } else if(val==1){
+                    mp.remove(ch);
+                }
+                if(mp.size()==k){
+                    break;
+                }
+            }
+
+            if(!m1 && !m2){
+                break;
+            }
+        }
+        System.out.println(mxSize);
+    }
 
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
@@ -287,5 +326,8 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("Count Substrings without Repeating Characters: ");
         hash.countSubstringsWithoutRepeatingCharacters("abbd");
+
+        System.out.println("Longest Substring With Exactly K Distinct Characters");
+        hash.longestSubstringWithExactlyKDistinctCharacters("aabcbcdbca",2);
     }
 }
