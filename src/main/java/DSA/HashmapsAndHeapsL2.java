@@ -1,9 +1,7 @@
 package DSA;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HashmapsAndHeapsL2 {
 
@@ -296,6 +294,49 @@ public class HashmapsAndHeapsL2 {
         System.out.println(mxSize);
     }
 
+
+    public void countOfEquivalentSubarrays(int[] arr){
+        Set<Integer> set=Arrays.stream(arr).boxed().collect(Collectors.toSet());
+        int count=0;
+        Map<Integer,Integer> mp=new HashMap<>();
+        int i=-1;
+        int j=-1;
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+
+            while(i<arr.length-1){
+                m1=true;
+                i++;
+                mp.put(arr[i],mp.getOrDefault(arr[i],0)+1);
+                if(mp.size()==set.size()){
+                    count+=arr.length-i;
+                    break;
+                }
+            }
+            while(j<=i && i<arr.length-1){
+                m2=true;
+                j++;
+                int val=mp.get(arr[j]);
+                if(val>1){
+                    mp.put(arr[j],val-1);
+                } else if(val==1){
+                    mp.remove(arr[j]);
+                }
+                if(mp.size()==set.size()){
+                    count+=arr.length-i;
+                } else if(mp.size()<set.size()){
+                    break;
+                }
+            }
+
+            if(!m1 && !m2){
+                break;
+            }
+        }
+        System.out.println(count);
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -329,5 +370,8 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("Longest Substring With Exactly K Distinct Characters");
         hash.longestSubstringWithExactlyKDistinctCharacters("aabcbcdbca",2);
+
+        System.out.println("Count of equivalent Subarrays");
+        hash.countOfEquivalentSubarrays(new int[]{2,5,3,5,2,4,1,3,1,4});
     }
 }
