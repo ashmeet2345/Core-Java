@@ -388,6 +388,77 @@ public class HashmapsAndHeapsL2 {
         System.out.println(mxLen);
     }
 
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        HashMap<Character, Integer> map2 = new HashMap<>(), map1 = new HashMap<>();
+        for (int i = 0; i < p.length(); i++) {
+            map2.put(p.charAt(i), map2.getOrDefault(p.charAt(i), 0) + 1);
+        }
+        int i = -1, j = -1;
+        while (true) {
+            boolean f1 = false, f2 = false;
+            while (j < s.length() - 1) {
+                f1 = true;
+                j++;
+                char ch = s.charAt(j);
+                map1.put(ch, map1.getOrDefault(ch, 0) + 1);
+                if (!map2.containsKey(ch) || map1.get(ch) > map2.get(ch)) break;
+                if (j - i == p.length()) ans.add(i + 1);
+
+            }
+            while (i < j) {
+                i++;
+                f2 = true;
+                char ch = s.charAt(i);
+                map1.put(ch, map1.getOrDefault(ch, 0) - 1);
+                if (map1.get(ch) <= 0) map1.remove(ch);
+                if (!map2.containsKey(ch)) break;
+                if (map1.containsKey(ch) && map1.get(ch).equals(map2.get(ch))) {
+                    if (j - i == p.length()) ans.add(i + 1);
+                    break;
+                }
+            }
+            if (!f1 && !f2) break;
+        }
+        return ans;
+    }
+
+    public String perfectDifference(String s1){
+        StringBuilder builder=new StringBuilder();
+        if(s1.length()>1){
+            for(int i=1;i<s1.length();i++){
+                int val=(int)s1.charAt(i)-(int)s1.charAt(i-1);
+                if(val<0){
+                    val+=26;
+                }
+                builder.append(val).append("#");
+            }
+        } else {
+            return builder.append("#").toString();
+        }
+        builder.deleteCharAt(s1.length());
+        return builder.toString();
+    }
+
+    public void groupShiftedStrings(String[] arr){
+        Map<String, List<String> > res=new HashMap<>();
+
+        for(int i=0;i<arr.length;i++){
+            String str=perfectDifference(arr[i]);
+            if(!res.containsKey(str)){
+                List<String> list=new ArrayList<>();
+                list.add(arr[i]);
+                res.put(str,list);
+            } else {
+                List<String> list=res.get(str);
+                list.add(arr[i]);
+                res.put(str,list);
+            }
+        }
+
+        res.entrySet().stream().forEach(s-> System.out.print(s.getValue()+" "));
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -427,5 +498,11 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("Maximum consecutive ones 1: ");
         hash.maximumConsecutiveOnes1(new int[]{1,1,0,1,0,0,1,1,0,1,0,1,1},3);
+
+        System.out.println("Find Anagrams: ");
+        hash.findAnagrams("abcabaccba","abac").stream().forEach(s-> System.out.print(s+" "));
+
+        System.out.println("Group shifted Strings: ");
+        hash.groupShiftedStrings(new String[]{"acd","dfg","wyz","yab","mop","bdfh","a","x","moqs"});
     }
 }
