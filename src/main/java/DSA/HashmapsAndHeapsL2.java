@@ -459,6 +459,32 @@ public class HashmapsAndHeapsL2 {
         res.entrySet().stream().forEach(s-> System.out.print(s.getValue()+" "));
     }
 
+    public void isomorphicStrings(String s1, String s2){
+        Map<Character, Character> map1=new HashMap<>();
+        Map<Character, Boolean> map2=new HashMap<>();
+        for(char i='a';i<='z';i++){
+            map2.put(i,false);
+        }
+        boolean ans=true;
+        for(int i=0;i<s1.length();i++){
+            char ch1=s1.charAt(i);
+            char ch2=s2.charAt(i);
+            if(map1.containsKey(ch1)){
+                if(map1.get(ch1)!=ch2){
+                    ans=false;
+                }
+            } else {
+                if(map2.containsKey(ch2)){
+                    ans=false;
+                } else {
+                    map1.put(ch1,ch2);
+                    map2.put(ch2,true);
+                }
+            }
+        }
+        System.out.println(ans);
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -502,7 +528,10 @@ public class HashmapsAndHeapsL2 {
         System.out.println("Find Anagrams: ");
         hash.findAnagrams("abcabaccba","abac").stream().forEach(s-> System.out.print(s+" "));
 
-        System.out.println("Group shifted Strings: ");
+        System.out.println("\nGroup shifted Strings: ");
         hash.groupShiftedStrings(new String[]{"acd","dfg","wyz","yab","mop","bdfh","a","x","moqs"});
+
+        System.out.println("\nIsomorphic Strings: ");
+        hash.isomorphicStrings("abacba","xyxyyx");
     }
 }
