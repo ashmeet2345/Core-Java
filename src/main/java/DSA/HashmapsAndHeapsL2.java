@@ -337,6 +337,57 @@ public class HashmapsAndHeapsL2 {
         System.out.println(count);
     }
 
+
+    public void maximumConsecutiveOnes1(int[] arr,int k){
+        int countZeros=0;
+        int mxLen=Integer.MIN_VALUE;
+        int len=0;
+        int i=-1;
+        int j=-1;
+        while(true){
+            boolean m1=false;
+            boolean m2=false;
+            while(i<arr.length-1){
+                m1=true;
+                i++;
+                if(arr[i]==1){
+                    len++;
+                } else if(arr[i]==0){
+                    if(countZeros<k){
+                        countZeros++;
+                        len++;
+                    } else {
+                        i--;
+                        break;
+                    }
+                }
+            }
+            mxLen=Math.max(mxLen,len);
+            while(j<=i && i<arr.length-1){
+                m2=true;
+                j++;
+                if(arr[j]==1){
+                    len--;
+                } else if(arr[j]==0){
+                    if(countZeros>=k){
+                        countZeros--;
+                        len--;
+                    } else {
+                        break;
+                    }
+                }
+                if(countZeros<k){
+                    break;
+                }
+            }
+
+            if(!m1 && !m2){
+                break;
+            }
+        }
+        System.out.println(mxLen);
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -373,5 +424,8 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("Count of equivalent Subarrays");
         hash.countOfEquivalentSubarrays(new int[]{2,5,3,5,2,4,1,3,1,4});
+
+        System.out.println("Maximum consecutive ones 1: ");
+        hash.maximumConsecutiveOnes1(new int[]{1,1,0,1,0,0,1,1,0,1,0,1,1},3);
     }
 }
