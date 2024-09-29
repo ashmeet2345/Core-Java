@@ -354,6 +354,38 @@ public class BinaryTree {
         return root==null || isSymmetric(root.left,root.right);
     }
 
+    public void rootToNodePathHelper(Node root, int val,String path){
+        if(root == null){
+            return;
+        }
+        if(root.data == val){
+            path+=" "+root.data;
+            System.out.println(path);
+            return;
+        }
+        rootToNodePathHelper(root.left,val,path+" "+root.data);
+        rootToNodePathHelper(root.right,val,path+" "+root.data);
+        return;
+    }
+
+    public Node lowestCommonAncestor(Node root, int p, int q){
+        if(root == null || root.data == p || root.data == q){
+            return root;
+        }
+
+        Node left=lowestCommonAncestor(root.left,p,q);
+        Node right=lowestCommonAncestor(root.right,p,q);
+
+        if(left==null){
+            return right;
+        }
+        else if(right==null){
+            return left;
+        } else {
+            return root;
+        }
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -415,6 +447,10 @@ public class BinaryTree {
         System.out.println("\nIs Tree Symmetrical Binary Tree: ");
         System.out.println(tree.symmetricalBinaryTree(root));
 
+        System.out.println("Print root to node path: ");
+        tree.rootToNodePathHelper(root,30,"");
 
+        System.out.println("Lowest Common Ancestor: ");
+        System.out.println(tree.lowestCommonAncestor(root,80,50).data);
     }
 }
