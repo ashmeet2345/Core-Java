@@ -315,6 +315,45 @@ public class BinaryTree {
         //to be printed first.
     }
 
+    public void topView(Node root){
+        Queue<Tuple> queue=new ArrayDeque<>();
+        TreeMap<Integer, Node> map=new TreeMap<>();
+        queue.add(new Tuple(root,0,0));
+        while(queue.size()>0){
+            Tuple tuple=queue.poll();
+            Node node=tuple.node;
+            int v=tuple.vertical;
+            int l=tuple.level;
+            if(!map.containsKey(v)){
+                map.put(v,node);
+            }
+            if(node.left!=null){
+                queue.add(new Tuple(node.left,v-1,l+1));
+            }
+            if(node.right!=null){
+                queue.add(new Tuple(node.right,v+1,l+1));
+            }
+        }
+
+        for(Map.Entry<Integer,Node> entry:map.entrySet()){
+            System.out.print(entry.getValue().data+" ");
+        }
+    }
+
+    public boolean isSymmetric(Node left,Node right){
+        if(left == null || right == null){
+            return left==right;
+        }
+        if(left.data!=right.data){
+            return false;
+        }
+        return isSymmetric(left.left,right.right) && isSymmetric(left.right,right.left);
+    }
+
+    public boolean symmetricalBinaryTree(Node root){
+        return root==null || isSymmetric(root.left,root.right);
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -369,5 +408,13 @@ public class BinaryTree {
 
         System.out.println("\nBoundary Traversal: ");
         tree.boundaryTraversal(root);
+
+        System.out.println("\nTop View: ");
+        tree.topView(root);
+
+        System.out.println("\nIs Tree Symmetrical Binary Tree: ");
+        System.out.println(tree.symmetricalBinaryTree(root));
+
+
     }
 }
