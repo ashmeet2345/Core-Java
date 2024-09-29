@@ -20,13 +20,15 @@ public class BinaryTree {
         }
     }
 
-    public class Tuple<Node,Pair>{
+    public class Tuple{
         Node node;
-        Pair pair;
+        int vertical;
+        int level;
 
-        public Tuple(Node node, Pair pair){
+        public Tuple(Node node, int vertical, int level){
             this.node=node;
-            this.pair=pair;
+            this.vertical=vertical;
+            this.level=level;
         }
 
     }
@@ -282,16 +284,35 @@ public class BinaryTree {
     }
 
     public void verticalTraversal(Node root){
-        Queue<Tuple<Node,Pair>> queue=new ArrayDeque<>();
-        queue.add(new Tuple<>(root,new Pair(0,0)));
-        Map<Integer,PriorityQueue<Pair> > mp=new HashMap<>();
-
+        Queue<Tuple> queue=new ArrayDeque<>();
+        TreeMap<Integer, TreeMap<Integer,PriorityQueue<Integer> > > map=new TreeMap<>();
+        queue.add(new Tuple(root,0,0));
         while(queue.size()>0){
-            Tuple top=queue.poll();
-            Pair pair= (Pair) top.pair;
-            //to be done later
+            Tuple tuple=queue.poll();
+            Node node=tuple.node;
+            int v=tuple.vertical;
+            int l=tuple.level;
+            if(!map.containsKey(v)){
+                map.put(v,new TreeMap<>());
+            }
+            if(!map.get(v).containsKey(l)){
+                map.get(v).put(l, new PriorityQueue<>());
+            }
+            map.get(v).get(l).offer(node.data);
+            if(node.left!=null){
+                queue.add(new Tuple(node.left,v-1,l+1));
+            }
+            if(node.right!=null){
+                queue.add(new Tuple(node.right,v+1,l+1));
+            }
         }
 
+        //Here we can traverse the map properly and print the result.
+        //Main logic for the question is mentioned above, we have to consider node to be presented
+        //on a graph, and consider them as coordinates
+        //Treemap is used to store result in a sorted order, first sorted by vertical, then by level
+        //Priority queue is used, if 2 nodes falls at same coordinate, then the smaller one is going
+        //to be printed first.
     }
 
     public static void main(String[] args) {
