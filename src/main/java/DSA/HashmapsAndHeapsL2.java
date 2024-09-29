@@ -485,6 +485,21 @@ public class HashmapsAndHeapsL2 {
         System.out.println(ans);
     }
 
+    public void subarraySumEqualsK(int[] arr, int k){
+        Map<Integer,Integer> map=new HashMap<>();
+        int count=0;
+        int sum=0;
+        map.put(0,1);
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            if(map.containsKey(sum-k)){
+                count+=map.get(sum-k);
+            }
+            map.put(sum,map.getOrDefault(sum,0)+1);
+        }
+        System.out.println(count);
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -533,5 +548,8 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("\nIsomorphic Strings: ");
         hash.isomorphicStrings("abacba","xyxyyx");
+
+        System.out.println("\nSubarray Sum equals k: ");
+        hash.subarraySumEqualsK(new int[]{3,9,-2,4,1,-7,2,6,-5,8,-3,-7,6,2,1},5);
     }
 }
