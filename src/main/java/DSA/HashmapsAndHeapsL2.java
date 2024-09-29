@@ -500,6 +500,25 @@ public class HashmapsAndHeapsL2 {
         System.out.println(count);
     }
 
+
+    public void longestSubarrayWithSumDivisibleByK(int[] arr, int k){
+        Map<Integer,Integer> map=new HashMap<>();
+        int sum=0;
+        int mxLen=Integer.MIN_VALUE;
+        map.put(0,-1);
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            int remainder=sum%k;
+            if(map.containsKey(remainder)){
+                mxLen=Math.max(i-map.get(remainder),mxLen);
+            } else {
+                map.put(remainder,i);
+            }
+
+        }
+        System.out.println(mxLen);
+    }
+
     public static void main(String[] args) {
         HashmapsAndHeapsL2 hash=new HashmapsAndHeapsL2();
         Map<String, String> hm=new HashMap<>();
@@ -551,5 +570,8 @@ public class HashmapsAndHeapsL2 {
 
         System.out.println("\nSubarray Sum equals k: ");
         hash.subarraySumEqualsK(new int[]{3,9,-2,4,1,-7,2,6,-5,8,-3,-7,6,2,1},5);
+
+        System.out.println("\nLongest Subarray with Sum Divisible By k:");
+        hash.longestSubarrayWithSumDivisibleByK(new int[]{2,4,8,1,7,3,6,1,9,2,7,3},5);
     }
 }
