@@ -354,25 +354,25 @@ public class BinaryTree {
         return root==null || isSymmetric(root.left,root.right);
     }
 
-    static List<Integer> list=new LinkedList<>();
+    static List<Node> list=new LinkedList<>();
     public boolean rootToNodePathHelper(Node root, int val){
         if(root == null){
             return false;
         }
         if(root.data == val){
-            list.add(root.data);
+            list.add(root);
             return true;
         }
 
         boolean left=rootToNodePathHelper(root.left,val);
         if(left){
-            list.add(root.data);
+            list.add(root);
             return true;
         }
 
         boolean right=rootToNodePathHelper(root.right,val);
         if(right){
-            list.add(root.data);
+            list.add(root);
             return true;
         }
 
@@ -421,8 +421,22 @@ public class BinaryTree {
         }
     }
 
-    public void printAllNodesAtADistanceOfK(Node root, int node){
+    public void printKlevelsDown(Node root, int k,Node blocker){
+        if(root == null || k<0 || root == blocker){
+            return;
+        }
+        if(k==0){
+            System.out.print(root.data+" ");
+        }
+        printKlevelsDown(root.left,k-1,blocker);
+        printKlevelsDown(root.right,k-1,blocker);
+    }
 
+    public void printKLevelsFar(Node root, int node, int k){
+        rootToNodePathHelper(root,node);
+        for(int i=0;i<list.size() && i<=k;i++){
+            printKlevelsDown(list.get(i),k-i,i>0?list.get(i-1):null);
+        }
     }
 
     public static void main(String[] args) {
@@ -486,9 +500,9 @@ public class BinaryTree {
         System.out.println("\nIs Tree Symmetrical Binary Tree: ");
         System.out.println(tree.symmetricalBinaryTree(root));
 
-        System.out.println("Print root to node path: ");
+        /*System.out.println("Print root to node path: ");
         tree.rootToNodePathHelper(root,110);
-        list.stream().forEach(s-> System.out.print(s+" "));
+        list.stream().forEach(s-> System.out.print(s+" "));*/
 
         System.out.println("\nLowest Common Ancestor: ");
         System.out.println(tree.lowestCommonAncestor(root,80,50).data);
@@ -496,5 +510,11 @@ public class BinaryTree {
         /*System.out.println("Children Sum Property in Binary Tree");
         tree.childrenSumPropertyInBinaryTree(root);
         tree.levelOrder(root);*/
+
+        System.out.println("\nPrint K levels down: ");
+        tree.printKlevelsDown(root,3,null);
+
+        System.out.println("\nPrint K levels far");
+        tree.printKLevelsFar(root,20,2);
     }
 }
