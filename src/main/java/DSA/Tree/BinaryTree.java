@@ -439,6 +439,26 @@ public class BinaryTree {
         }
     }
 
+    public void printTillLeafNode(Node root,Node blocker,int count){
+        if(root == null || root == blocker){
+            return;
+        }
+        printTillLeafNode(root.left,blocker,count+1);
+        printTillLeafNode(root.right,blocker,count+1);
+    }
+
+    public void minimumTimeTakenToBurnBinaryTree(Node root, int node){
+        rootToNodePathHelper(root,node);
+        int count;
+        int mxVal=Integer.MIN_VALUE;
+        for(int i=0;i<list.size();i++){
+            count=i;
+            printTillLeafNode(list.get(i),i>0?list.get(i-1):null,count);
+            mxVal=Math.max(mxVal,count);
+        }
+        System.out.println(mxVal);
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -500,9 +520,9 @@ public class BinaryTree {
         System.out.println("\nIs Tree Symmetrical Binary Tree: ");
         System.out.println(tree.symmetricalBinaryTree(root));
 
-        /*System.out.println("Print root to node path: ");
-        tree.rootToNodePathHelper(root,110);
-        list.stream().forEach(s-> System.out.print(s+" "));*/
+        System.out.println("Print root to node path: ");
+        tree.rootToNodePathHelper(root,10);
+        list.stream().forEach(s-> System.out.print(s.data+" "));
 
         System.out.println("\nLowest Common Ancestor: ");
         System.out.println(tree.lowestCommonAncestor(root,80,50).data);
@@ -516,5 +536,8 @@ public class BinaryTree {
 
         System.out.println("\nPrint K levels far");
         tree.printKLevelsFar(root,20,2);
+
+        System.out.println("\nMinimum time taken to burn the binary tree: ");
+        tree.minimumTimeTakenToBurnBinaryTree(root,10);
     }
 }
