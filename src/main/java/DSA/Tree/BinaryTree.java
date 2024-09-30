@@ -354,18 +354,29 @@ public class BinaryTree {
         return root==null || isSymmetric(root.left,root.right);
     }
 
-    public void rootToNodePathHelper(Node root, int val,String path){
+    static List<Integer> list=new LinkedList<>();
+    public boolean rootToNodePathHelper(Node root, int val){
         if(root == null){
-            return;
+            return false;
         }
         if(root.data == val){
-            path+=" "+root.data;
-            System.out.println(path);
-            return;
+            list.add(root.data);
+            return true;
         }
-        rootToNodePathHelper(root.left,val,path+" "+root.data);
-        rootToNodePathHelper(root.right,val,path+" "+root.data);
-        return;
+
+        boolean left=rootToNodePathHelper(root.left,val);
+        if(left){
+            list.add(root.data);
+            return true;
+        }
+
+        boolean right=rootToNodePathHelper(root.right,val);
+        if(right){
+            list.add(root.data);
+            return true;
+        }
+
+        return false;
     }
 
     public Node lowestCommonAncestor(Node root, int p, int q){
@@ -408,6 +419,10 @@ public class BinaryTree {
         if(root.left!=null || root.right!=null){
             root.data=sum;
         }
+    }
+
+    public void printAllNodesAtADistanceOfK(Node root, int node){
+
     }
 
     public static void main(String[] args) {
@@ -472,9 +487,10 @@ public class BinaryTree {
         System.out.println(tree.symmetricalBinaryTree(root));
 
         System.out.println("Print root to node path: ");
-        tree.rootToNodePathHelper(root,30,"");
+        tree.rootToNodePathHelper(root,110);
+        list.stream().forEach(s-> System.out.print(s+" "));
 
-        System.out.println("Lowest Common Ancestor: ");
+        System.out.println("\nLowest Common Ancestor: ");
         System.out.println(tree.lowestCommonAncestor(root,80,50).data);
 
         /*System.out.println("Children Sum Property in Binary Tree");
