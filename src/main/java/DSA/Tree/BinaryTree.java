@@ -386,6 +386,30 @@ public class BinaryTree {
         }
     }
 
+    public void childrenSumPropertyInBinaryTree(Node root){
+        if(root==null) return;
+        int child=0;
+        if(root.left!=null) child+=root.left.data;
+        if(root.right!=null) child+=root.right.data;
+        if(child>=root.data)
+            root.data=child;
+        else {
+            if(root.left!=null) root.left.data=root.data;
+            if(root.right!=null) root.right.data=root.data;
+        }
+        childrenSumPropertyInBinaryTree(root.left);
+        childrenSumPropertyInBinaryTree(root.right);
+
+        int sum=0;
+        if(root.left!=null)
+            sum+=root.left.data;
+        if(root.right!=null)
+            sum+=root.right.data;
+        if(root.left!=null || root.right!=null){
+            root.data=sum;
+        }
+    }
+
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
@@ -452,5 +476,9 @@ public class BinaryTree {
 
         System.out.println("Lowest Common Ancestor: ");
         System.out.println(tree.lowestCommonAncestor(root,80,50).data);
+
+        /*System.out.println("Children Sum Property in Binary Tree");
+        tree.childrenSumPropertyInBinaryTree(root);
+        tree.levelOrder(root);*/
     }
 }
