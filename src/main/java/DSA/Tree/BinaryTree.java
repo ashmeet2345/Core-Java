@@ -458,7 +458,7 @@ public class BinaryTree {
         }
         System.out.println(mxVal);
     }
-
+    
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
         tree.insert(root, 10);
