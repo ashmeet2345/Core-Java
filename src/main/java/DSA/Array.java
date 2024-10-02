@@ -56,6 +56,29 @@ public class Array {
         System.out.println();
     }
 
+    public void swap(int[] arr,int i,int j){
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+
+    public void moveAllZeroesToEndOfArray(int[] arr){
+        int j=-1;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==0 && j==-1){
+                j=i;
+                continue;
+            }
+            if(arr[i]!=0 && j>0){
+                swap(arr,i,j);
+                j++;
+            }
+        }
+
+        Arrays.stream(arr).forEach(s-> System.out.print(s+" "));
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -67,5 +90,8 @@ public class Array {
 
         System.out.print("Rotate an array to left by K elements: ");
         array.rotateArrayToLeftByKElements(new int[]{1,2,3,4,5,6,7},3);
+
+        System.out.print("Move all zeroes to end: ");
+        array.moveAllZeroesToEndOfArray(new int[]{1,0,2,3,2,0,0,4,5,1});
     }
 }
