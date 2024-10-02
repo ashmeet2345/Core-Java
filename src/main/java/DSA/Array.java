@@ -1,5 +1,6 @@
 package DSA;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,6 +36,26 @@ public class Array {
         System.out.println(j+1);
     }
 
+    public void reverse(int[] arr, int i,int j){
+        int temp=-1;
+        while(i<=j){
+            temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
+            i++;
+            j--;
+        }
+    }
+
+    public void rotateArrayToLeftByKElements(int[] arr, int k){
+        reverse(arr,0,k-1);
+        reverse(arr,k,arr.length-1);
+        reverse(arr,0,arr.length-1);
+
+        Arrays.stream(arr).forEach(s-> System.out.print(s+" "));
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -43,5 +64,8 @@ public class Array {
 
         System.out.print("Remove Duplicate Elements: ");
         array.removeDuplicatesInPlaceFromSortedArray(new int[]{1,1,2,2,2,3,3});
+
+        System.out.print("Rotate an array to left by K elements: ");
+        array.rotateArrayToLeftByKElements(new int[]{1,2,3,4,5,6,7},3);
     }
 }
