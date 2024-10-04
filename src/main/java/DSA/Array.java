@@ -117,7 +117,7 @@ public class Array {
         int j=0;
         int n1=a.length;
         int n2=b.length;
-        int[] intersection=new int[n1+n2];
+        int[] intersection=new int[n1>n2?n2:n1];
         int k=0;
         while(i<n1 && j<n2){
             if(a[i]==b[j]){
@@ -130,6 +130,71 @@ public class Array {
                 j++;
             }
         }
+
+        Arrays.stream(intersection).forEach(s-> System.out.print(s+" "));
+    }
+
+    public void findMissingNumber(int[] arr){
+        int xor1=0;
+        int xor2=0;
+        for(int i=0;i<arr.length-1;i++){
+            xor1^=(i+1);
+            xor2^=arr[i];
+        }
+        xor1^=arr.length;
+        System.out.println(xor1^xor2);
+    }
+
+    public void findElementThatAppearsOnce(int[] arr){
+        int xor=0;
+        for(int i=0;i<arr.length;i++){
+            xor^=arr[i];
+        }
+        System.out.println(xor);
+    }
+
+    public void longestSubarrayWithSumK(int[] arr, int k){
+        int i=-1;
+        int j=-1;
+        int mxLen=Integer.MIN_VALUE;
+        int len=0;
+        int sum=0;
+        while(true){
+            boolean t1=false,t2=false;
+            while(i<arr.length-1){
+                t1=true;
+                i++;
+                sum+=arr[i];
+                len++;
+                if(sum<k){
+                    continue;
+                } else if(sum==k){
+                    mxLen=Math.max(mxLen,len);
+                } else {
+                    break;
+                }
+            }
+
+            while(j<=i && i<arr.length-1){
+                t2=true;
+                j++;
+                sum-=arr[j];
+                len--;
+                if(sum>k){
+                    continue;
+                } else if(sum==k){
+                    mxLen=Math.max(mxLen,len);
+                } else {
+                    break;
+                }
+            }
+
+            if(!t1 && !t2){
+                break;
+            }
+        }
+
+        System.out.println(mxLen);
     }
 
     public static void main(String[] args) {
@@ -149,8 +214,19 @@ public class Array {
 
         System.out.print("Union of 2 sorted arrays");
         array.unionOfTwoSortedArrays(new int[]{1,1,2,3,4,5},new int[]{2,3,4,4,5,6});
+        System.out.println();
 
         System.out.print("Intersection of 2 sorted arrays: ");
         array.intersectionOfTwoSortedArrays(new int[]{1,2,2,3,3,4,5,6},new int[]{2,3,3,5,6,6,7});
+        System.out.println();
+
+        System.out.print("Find missing number in the array: ");
+        array.findMissingNumber(new int[]{1,2,4,5});
+
+        System.out.print("Find element that appears once: ");
+        array.findElementThatAppearsOnce(new int[]{1,1,2,2,3,3,4,4,5});
+
+        System.out.println("Longest Subarray with Sum K: ");
+        array.longestSubarrayWithSumK(new int[]{1,2,3,1,1,1,1,4,2,3},9);
     }
 }
