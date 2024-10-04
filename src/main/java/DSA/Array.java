@@ -321,6 +321,31 @@ public class Array {
        Arrays.stream(arr).forEach(s-> System.out.print(s+" "));
     }
 
+    public void nextPermutation(List<Integer> arr){
+        int ind=-1;
+        for(int i=arr.size()-2;i>=0;i--){
+            if(arr.get(i) < arr.get(i+1)){
+                ind=i;
+                break;
+            }
+        }
+        if(ind == -1){
+            Collections.reverse(arr);
+            arr.stream().forEach(s-> System.out.print(s+" "));
+            return;
+        }
+
+        for(int i=arr.size()-1;i>ind;i--){
+            if(arr.get(i)>arr.get(ind)){
+                Collections.swap(arr,ind,i);
+                break;
+            }
+        }
+
+        Collections.sort(arr.subList(ind+1,arr.size()));
+        arr.stream().forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -368,5 +393,7 @@ public class Array {
         System.out.println("\nRearrange Array elements by sign: ");
         array.rearrangeArrayElementsBySign(new int[]{2,-1,5,6,-7,4,9,-2,-5,10,12});
 
+        System.out.println("\nNext Permutation: ");
+        array.nextPermutation(Arrays.asList(2,1,5,4,3,0,0));
     }
 }
