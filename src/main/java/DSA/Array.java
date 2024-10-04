@@ -346,6 +346,20 @@ public class Array {
         arr.stream().forEach(s-> System.out.print(s+" "));
     }
 
+    public void leadersInAnArray(int[] arr){
+        int n=arr.length;
+        List<Integer> res=new ArrayList<>();
+        int mx=Integer.MIN_VALUE;
+        for(int i=n-1;i>=0;i--){
+            if(arr[i]>mx){
+                mx=arr[i];
+                res.add(arr[i]);
+            }
+        }
+
+        res.stream().forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -395,5 +409,8 @@ public class Array {
 
         System.out.println("\nNext Permutation: ");
         array.nextPermutation(Arrays.asList(2,1,5,4,3,0,0));
+
+        System.out.println("\nLeaders in an Array: ");
+        array.leadersInAnArray(new int[]{10,22,12,3,0,6});
     }
 }
