@@ -241,6 +241,48 @@ public class Array {
         Arrays.stream(arr).forEach(a-> System.out.print(a+" "));
     }
 
+    public void majorityElement1(int[] arr){
+        int m=arr.length/2;
+        int ele=0;
+        int count=0;
+        for(int i=0;i<arr.length;i++){
+            if(count==0){
+                count=1;
+                ele=arr[i];
+            } else if(arr[i]==ele){
+                count++;
+            } else {
+                count--;
+            }
+        }
+
+        count=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==ele){
+                count++;
+            }
+        }
+        if(count>m){
+            System.out.print(ele);
+        }
+    }
+
+    public void kadanesAlgorithm(int[] arr){
+        int omax=Integer.MIN_VALUE;
+        int cmax=0;
+        for(int i=0;i<arr.length;i++){
+            cmax+=arr[i];
+
+            if(cmax>omax){
+                omax=cmax;
+            }
+            if(cmax < 0){
+                cmax=0;
+            }
+        }
+        System.out.println(omax);
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -278,5 +320,14 @@ public class Array {
 
         System.out.println("Sort an array of 0s 1s & 2s");
         array.sortAnArrayof0s1sAnd2s(new int[]{0,1,1,0,1,2,1,2,0,0,0});
+
+        System.out.println("\nMajority Element 1: ");
+        array.majorityElement1(new int[]{1,2,3,1,1,1,1,1,2,3});
+
+        System.out.print("\nKadane's Algorithm: ");
+        array.kadanesAlgorithm(new int[]{-2,-3,4,-1,-2,1,5,-3});
+
+
+
     }
 }
