@@ -197,6 +197,50 @@ public class Array {
         System.out.println(mxLen);
     }
 
+    public void twoSumProblem(int[] arr, int k){
+        Arrays.sort(arr);
+        int i=0;
+        int j=arr.length-1;
+        while(i<=j){
+            if(arr[i]+arr[j]==k){
+                System.out.println("Yes");
+                break;
+            } else if(arr[i]+arr[j]<k){
+                i++;
+            } else {
+                j--;
+            }
+        }
+    }
+
+    public void sortAnArrayof0s1sAnd2s(int[] arr){
+        int low=0;
+        int mid=0;
+        int high=arr.length-1;
+        //we will be following dutch national flag algorithm
+        //here index 0 - low-1 ---> 0s
+        //low - mid-1  ----> 1s
+        //high+1 - n-1 ----> 2s
+        //so we have to keep checking for mid - high
+
+        while(mid<=high){
+            if(arr[mid]==0){
+                swap(arr,low,mid);
+                low++;
+                mid++;
+            }
+            else if(arr[mid] == 1){
+                mid++;
+            }
+            else {
+                swap(arr,mid,high);
+                high--;
+            }
+        }
+
+        Arrays.stream(arr).forEach(a-> System.out.print(a+" "));
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -228,5 +272,11 @@ public class Array {
 
         System.out.println("Longest Subarray with Sum K: ");
         array.longestSubarrayWithSumK(new int[]{1,2,3,1,1,1,1,4,2,3},9);
+
+        System.out.println("Two sum problem: ");
+        array.twoSumProblem(new int[]{2,6,5,8,11},14);
+
+        System.out.println("Sort an array of 0s 1s & 2s");
+        array.sortAnArrayof0s1sAnd2s(new int[]{0,1,1,0,1,2,1,2,0,0,0});
     }
 }
