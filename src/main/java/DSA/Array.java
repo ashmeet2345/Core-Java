@@ -1,9 +1,6 @@
 package DSA;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Array {
 
@@ -283,6 +280,47 @@ public class Array {
         System.out.println(omax);
     }
 
+    public void rearrangeArrayElementsBySign(int[] arr){
+
+        ArrayList<Integer> pos=new ArrayList<>();
+        ArrayList<Integer> neg=new ArrayList<>();
+
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>=0) pos.add(arr[i]);
+            else neg.add(arr[i]);
+        }
+
+        if(pos.size()==neg.size()){
+            for(int i=0;i<pos.size();i++){
+                arr[2*i]=pos.get(i);
+                arr[(2*i)+1]=neg.get(i);
+            }
+        } else {
+            if(pos.size()>neg.size()){
+                int p=0;
+                for(int i=0;i<neg.size();i++){
+                    arr[2*i]=pos.get(i);
+                    arr[(2*i)+1]=neg.get(i);
+                    p+=2;
+                }
+                for(int i=neg.size();i<pos.size();i++){
+                    arr[p++]=pos.get(i);
+                }
+            } else {
+                int n=0;
+                for(int i=0;i<pos.size();i++){
+                    arr[2*i]=pos.get(i);
+                    arr[(2*i)+1]=neg.get(i);
+                    n+=2;
+                }
+                for(int i=pos.size();i<neg.size();i++){
+                    arr[n++]=neg.get(i);
+                }
+            }
+        }
+       Arrays.stream(arr).forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -327,7 +365,8 @@ public class Array {
         System.out.print("\nKadane's Algorithm: ");
         array.kadanesAlgorithm(new int[]{-2,-3,4,-1,-2,1,5,-3});
 
-
+        System.out.println("\nRearrange Array elements by sign: ");
+        array.rearrangeArrayElementsBySign(new int[]{2,-1,5,6,-7,4,9,-2,-5,10,12});
 
     }
 }
