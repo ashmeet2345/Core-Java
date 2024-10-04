@@ -1,6 +1,9 @@
 package DSA;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class Array {
 
@@ -360,6 +363,24 @@ public class Array {
         res.stream().forEach(s-> System.out.print(s+" "));
     }
 
+    public void longestConsecutiveSequence(int[] arr){
+        TreeSet<Integer> set=new TreeSet<>();
+        for(int i=0;i<arr.length;i++){
+            set.add(arr[i]);
+        }
+        int len=1;
+        int mxLen=Integer.MIN_VALUE;
+        for(Integer it:set){
+            if(set.contains(it+1)){
+                len++;
+            } else {
+                len=1;
+            }
+            mxLen=Math.max(len,mxLen);
+        }
+        System.out.println(mxLen);
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -412,5 +433,8 @@ public class Array {
 
         System.out.println("\nLeaders in an Array: ");
         array.leadersInAnArray(new int[]{10,22,12,3,0,6});
+
+        System.out.println("\nLongest Consecutive Sequence: ");
+        array.longestConsecutiveSequence(new int[]{102,4,100,1,101,3,2,1,103,104});
     }
 }
