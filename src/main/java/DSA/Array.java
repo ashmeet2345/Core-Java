@@ -434,6 +434,38 @@ public class Array {
         if(count2>=mini) System.out.print(ele2+" ");
     }
 
+
+    public void threeSum(int[] arr){
+        int i=0;
+        int j=1;
+        int k=arr.length-1;
+        Set<List<Integer>> set=new HashSet<>();
+        while(i<arr.length-1){
+            if(j<=k){
+                if(arr[i]+arr[j]+arr[k]==0){
+                    set.add(Arrays.asList(arr[i],arr[j],arr[k]));
+                    j++;
+                    k--;
+                } else if(arr[i]+arr[j]+arr[k]<0){
+                    j++;
+                } else {
+                    k--;
+                }
+            } else {
+                i++;
+                if(arr[i]==arr[i-1]){
+                    continue;
+                } else {
+                    j=i+1;
+                    k=arr.length-1;
+                }
+            }
+        }
+        for(List<Integer> list:set){
+            System.out.println(list);
+        }
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -495,5 +527,8 @@ public class Array {
 
         System.out.println("\nMajority Element II: ");
         array.majorityElementII(new int[]{2,1,1,1,1,3,2,2,2,2});
+
+        System.out.println("\nThree sum: ");
+        array.threeSum(new int[]{-2,-2,-2,-1,-1,-1,0,0,0,2,2,2,2});
     }
 }
