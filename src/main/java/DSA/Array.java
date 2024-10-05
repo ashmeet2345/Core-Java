@@ -381,6 +381,26 @@ public class Array {
         System.out.println(mxLen);
     }
 
+    public void countSubarraySumEqualsK(int[] arr, int k){
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
+        int sum=0;
+        int count=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            int rsum=sum-k;
+            if(!map.containsKey(rsum)){
+                map.put(sum,1);
+            } else {
+                count+=map.get(rsum);
+                map.put(sum,map.getOrDefault(sum,0)+1);
+            }
+        }
+
+        System.out.println(count);
+
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -436,5 +456,8 @@ public class Array {
 
         System.out.println("\nLongest Consecutive Sequence: ");
         array.longestConsecutiveSequence(new int[]{102,4,100,1,101,3,2,1,103,104});
+
+        System.out.print("\nCount subarray sum equals k: ");
+        array.countSubarraySumEqualsK(new int[]{1,2,3,-3,1,1,1,4,2,-3},3);
     }
 }
