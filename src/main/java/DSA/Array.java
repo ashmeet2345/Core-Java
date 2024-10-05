@@ -401,6 +401,39 @@ public class Array {
 
     }
 
+    public void majorityElementII(int[] arr){
+        int count1=0,count2=0,ele1=0,ele2=0;
+        for(int i=0;i<arr.length;i++){
+            if(count1 == 0 && arr[i]!=ele2){
+                count1=1;
+                ele1=arr[i];
+            } else if(count2 == 0 && arr[i]!=ele1){
+                count2=1;
+                ele2=arr[i];
+            }else if(ele1 == arr[i]){
+                count1++;
+            }else if(ele2 == arr[i]){
+                count2++;
+            }else{
+                count1--;
+                count2--;
+            }
+        }
+
+        count1=0;
+        count2=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==ele1){
+                count1++;
+            }else if(arr[i]==ele2){
+                count2++;
+            }
+        }
+        int mini=(int)(arr.length/3)+1;
+        if(count1>=mini) System.out.print(ele1+" ");
+        if(count2>=mini) System.out.print(ele2+" ");
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -459,5 +492,8 @@ public class Array {
 
         System.out.print("\nCount subarray sum equals k: ");
         array.countSubarraySumEqualsK(new int[]{1,2,3,-3,1,1,1,4,2,-3},3);
+
+        System.out.println("\nMajority Element II: ");
+        array.majorityElementII(new int[]{2,1,1,1,1,3,2,2,2,2});
     }
 }
