@@ -439,6 +439,7 @@ public class Array {
         int i=0;
         int j=1;
         int k=arr.length-1;
+        Arrays.sort(arr);
         Set<List<Integer>> set=new HashSet<>();
         while(i<arr.length-1){
             if(j<=k){
@@ -461,6 +462,52 @@ public class Array {
                 }
             }
         }
+        for(List<Integer> list:set){
+            System.out.println(list);
+        }
+    }
+
+    public void fourSum(int[] arr,int target){
+        int n=arr.length;
+        int i=0;
+        int j=i+1;
+        int k=j+1;
+        int l=n-1;
+        Set<List<Integer>> set=new HashSet<>();
+        while(i<arr.length-2){
+            if(j<arr.length-1){
+                if(k<=l){
+                    if(arr[i]+arr[j]+arr[k]+arr[l]==target){
+                        set.add(Arrays.asList(arr[i],arr[j],arr[k],arr[l]));
+                        k++;
+                        l--;
+                        if(arr[k]==arr[k-1] || arr[l]==arr[l+1]){
+                            continue;
+                        }
+                    } else if(arr[i]+arr[j]+arr[k]+arr[l] < target){
+                        l--;
+                    } else {
+                        k++;
+                    }
+                } else {
+                    j++;
+                    if(arr[j]==arr[j-1]){
+                        continue;
+                    }
+                    k=j+1;
+                    l=n-1;
+                }
+            }else{
+                i++;
+                if(arr[i]==arr[i-1]){
+                    continue;
+                }
+                j=i+1;
+                k=j+1;
+                l=n-1;
+            }
+        }
+
         for(List<Integer> list:set){
             System.out.println(list);
         }
@@ -530,5 +577,8 @@ public class Array {
 
         System.out.println("\nThree sum: ");
         array.threeSum(new int[]{-2,-2,-2,-1,-1,-1,0,0,0,2,2,2,2});
+
+        System.out.println("\nFour sum: ");
+        array.fourSum(new int[]{1,1,1,2,2,2,3,3,3,4,4,4,5,5},8);
     }
 }
