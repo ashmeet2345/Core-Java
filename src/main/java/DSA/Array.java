@@ -7,6 +7,26 @@ import static java.util.stream.Collectors.*;
 
 public class Array {
 
+    public static class Pair implements Comparable<Pair>{
+        int first;
+        int second;
+
+        public Pair(int first, int second){
+            this.first=first;
+            this.second=second;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            return this.first-o.first;
+        }
+
+        @Override
+        public String toString() {
+            return "["+first+","+second+"]";
+        }
+    }
+
     public void secondLargestElement(int[] arr){
         int first=arr[0];
         int second=arr[0];
@@ -513,6 +533,27 @@ public class Array {
         }
     }
 
+    public void mergeOverlappingIntervals(Pair[] arr){
+        Arrays.sort(arr);
+        Stack<Pair> st=new Stack<>();
+        st.push(arr[0]);
+        for(int i=1;i<arr.length;i++){
+            if(st.peek().second >= arr[i].first){
+                if(st.peek().second < arr[i].second){
+                    Pair p=st.pop();
+                    p.second=arr[i].second;
+                    st.add(p);
+                }
+            } else {
+                st.add(arr[i]);
+            }
+        }
+
+        while(st.size()>0){
+            System.out.println(st.pop()+" ");
+        }
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -580,5 +621,16 @@ public class Array {
 
         System.out.println("\nFour sum: ");
         array.fourSum(new int[]{1,1,1,2,2,2,3,3,3,4,4,4,5,5},8);
+
+        System.out.println("\nMerge overlapping intervals: ");
+        Pair[] arr=new Pair[8];
+        Random rand=new Random();
+        for(int i=0;i<8;i++){
+            int a=rand.nextInt(10)+1;
+            int b=rand.nextInt(15)+1;
+            Pair p=new Pair(a,b);
+            arr[i]=p;
+        }
+        array.mergeOverlappingIntervals(arr);
     }
 }
