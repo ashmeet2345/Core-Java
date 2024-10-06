@@ -575,9 +575,8 @@ public class Array {
 
         System.out.print("Intersection of 2 sorted arrays: ");
         array.intersectionOfTwoSortedArrays(new int[]{1,2,2,3,3,4,5,6},new int[]{2,3,3,5,6,6,7});
-        System.out.println();
 
-        System.out.print("Find missing number in the array: ");
+        System.out.print("\nFind missing number in the array: ");
         array.findMissingNumber(new int[]{1,2,4,5});
 
         System.out.print("Find element that appears once: ");
@@ -632,5 +631,6 @@ public class Array {
             arr[i]=p;
         }
         array.mergeOverlappingIntervals(arr);
+
     }
 }
