@@ -348,6 +348,10 @@ public class DynamicProgrammingLevel2 {
         int[] res=new int[str.length()];
         res[0]=0;
         for(int j=1;j<res.length;j++){
+            if(dp[0][j]){
+                res[j]=0;
+                break;
+            }
             int min=Integer.MAX_VALUE;
             for(int i=j;i>=1;i--){
                 if(dp[i][j]){
@@ -361,44 +365,21 @@ public class DynamicProgrammingLevel2 {
         System.out.println(res[str.length()-1]);
     }
 
-    public int longestCommonSubsequenceRecursive(String a,String b,int n,int m,int[][] t){
-        if(n==0 || m==0){
-            return 0;
-        }
+    public void longestCommonSubsequence(String a, String b){
+        int[][] dp=new int[a.length()+1][b.length()+1];
 
-        if(t[n][m]!=-1){
-            return t[n][m]+1;
-        }
 
-        if(a.charAt(n-1)==b.charAt(m-1)){
-            t[n][m]=1;
-            return 1+longestCommonSubsequenceRecursive(a,b,n-1,m-1,t);
-        } else {
-            return Math.max(longestCommonSubsequenceRecursive(a,b,n-1,m,t),
-                    longestCommonSubsequenceRecursive(a,b,n,m-1,t));
-        }
-    }
-
-    public void lcsTopDown(String x, String y){
-        int[][] dp=new int[x.length()+1][y.length()+1];
-        for(int i=0;i<=x.length();i++){
-            dp[i][0]=0;
-        }
-        for(int j=0;j<=y.length();j++){
-            dp[0][j]=0;
-        }
-        int xlen=x.length();
-        int ylen=y.length();
-        for(int i=1;i<dp.length;i++){
-            for(int j=1;j<dp[0].length;j++){
-                 if(x.charAt(i-1)==y.charAt(j-1)){
-                     dp[i][j]=1+dp[i-1][j-1];
-                 } else {
-                     dp[i][j]=Math.max(dp[i][j-1],dp[i-1][j]);
-                 }
+        for(int i=a.length()-2;i>=0;i--){
+            for(int j=b.length()-2;j>=0;j--){
+                if(a.charAt(i)==a.charAt(j)){
+                    dp[i][j]=dp[i+1][j+1]+1;
+                } else {
+                    dp[i][j]=Math.max(dp[i+1][j],dp[i][j+1]);
+                }
             }
         }
-        System.out.println(dp[xlen][ylen]);
+
+        System.out.println(dp[0][0]);
     }
 
     public void longestPalindromicSubsequence(String s){
@@ -517,12 +498,8 @@ public class DynamicProgrammingLevel2 {
         System.out.print("\nPalindrome Partitioning: ");
         dp.palindromePartitioningWithMinimumCuts("abccbc");
 
-        String x="abccdc"; String y="abbcdt"; int[][] t=new int[x.length()+1][y.length()+1];
-        for (int[] row : t)
-            Arrays.fill(row, -1);
-        System.out.println("Longest common substring: "+dp.longestCommonSubsequenceRecursive(x,y,6,6,t));
-        System.out.println("LCS Top down: ");
-        dp.lcsTopDown("abcbc","abccdb");
+        System.out.println("\nLongest Common Subsequence: ");
+        dp.longestCommonSubsequence("abcd","aebd");
 
         System.out.print("Longest Palindromic Subsequence: ");
         dp.longestPalindromicSubsequence("abkccbc");
