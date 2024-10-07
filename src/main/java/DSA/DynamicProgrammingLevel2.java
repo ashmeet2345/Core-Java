@@ -427,6 +427,50 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[0][s.length()-1]);
     }
 
+    public void countPalindromicSubstrings(String s){
+        boolean[][] dp=new boolean[s.length()][s.length()];
+        int count=0;
+        for(int g=0;g<s.length();g++){
+            for(int i=0,j=g;j<s.length();i++,j++){
+                if(g==0){
+                    dp[i][j]=true;
+                }else if(g==1){
+                    dp[i][j]=s.charAt(i)==s.charAt(j);
+                }else{
+                    if(s.charAt(i)==s.charAt(j)){
+                        dp[i][j]=dp[i+1][j-1];
+                    }
+                }
+                if(dp[i][j]){
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    public void longestPalindromicSubstring(String s){
+        boolean[][] dp=new boolean[s.length()][s.length()];
+        int length=Integer.MIN_VALUE;
+        for(int g=0;g<s.length();g++){
+            for(int i=0,j=g;j<s.length();i++,j++){
+                if(g==0){
+                    dp[i][j]=true;
+                }else if(g==1){
+                    dp[i][j]=s.charAt(i)==s.charAt(j);
+                }else{
+                    if(s.charAt(i)==s.charAt(j)){
+                        dp[i][j]=dp[i+1][j-1];
+                    }
+                }
+                if(dp[i][j]){
+                    length=Math.max(length,g+1);
+                }
+            }
+        }
+        System.out.println(length);
+    }
+
     public void kadanesAlgorithm(int[] arr){
         int curr=arr[0];
         int over=arr[0];
@@ -440,6 +484,30 @@ public class DynamicProgrammingLevel2 {
             over=Math.max(over,curr);
         }
         System.out.println(over);
+    }
+
+    public void wildcardMatching(String s, String p){
+        boolean[][] dp=new boolean[p.length()+1][s.length()+1];
+
+        dp[p.length()][s.length()]=true;
+        for(int i=dp.length-2;i>=0;i--){
+            for(int j=dp[0].length-2;j>=0;j--){
+                if(p.charAt(i)=='?'){
+                    dp[i][j]=dp[i+1][j+1];
+                }else if(p.charAt(i)=='*'){
+                    if(dp[i][j+1] || dp[i+1][j] || dp[i+1][j+1]){
+                        dp[i][j]=true;
+                    }
+                }else{
+                    if(p.charAt(i) == s.charAt(j)){
+                        dp[i][j]=dp[i+1][j+1];
+                    } else {
+                        dp[i][j]=false;
+                    }
+                }
+            }
+        }
+        System.out.println(dp[0][0]);
     }
 
     public static void main(String[] args) {
@@ -502,7 +570,7 @@ public class DynamicProgrammingLevel2 {
         System.out.print("\nPalindrome Partitioning: ");
         dp.palindromePartitioningWithMinimumCuts("abccbc");
 
-        System.out.println("\nLongest Common Subsequence: ");
+        System.out.print("\nLongest Common Subsequence: ");
         dp.longestCommonSubsequence("abcd","aebd");
 
         System.out.print("Longest Palindromic Subsequence: ");
@@ -511,7 +579,16 @@ public class DynamicProgrammingLevel2 {
         System.out.print("Count Palindromic Subsequence: ");
         dp.countPalindromicSubsequence("abccbc");
 
+        System.out.print("Count Palindromic Substring: ");
+        dp.countPalindromicSubstrings("abccbc");
+
+        System.out.print("Longest Palindromic Substring: ");
+        dp.longestPalindromicSubstring("abccbc");
+
         System.out.print("Kadane's Algorithm: ");
         dp.kadanesAlgorithm(new int[]{4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1});
+
+        System.out.print("Wildcard matching: ");
+        dp.wildcardMatching("baaabab","pa*a?");
     }
 }
