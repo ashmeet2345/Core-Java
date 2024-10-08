@@ -554,6 +554,33 @@ public class Array {
         }
     }
 
+    public void productOfArrayExceptItself(int[] arr){
+        int[] left=new int[arr.length];
+        int[] right=new int[arr.length];
+        int[] res=new int[arr.length];
+
+        left[0]=arr[0];
+        right[arr.length-1]=arr[arr.length-1];
+        for(int i=1;i<arr.length;i++){
+            left[i]=left[i-1]*arr[i];
+        }
+        for(int i=arr.length-2;i>=0;i--){
+            right[i]=right[i+1]*arr[i];
+        }
+
+        for(int i=0;i<arr.length;i++){
+            if(i==0){
+                res[i]=right[i+1];
+            }else if(i==arr.length-1){
+                res[i]=left[i-1];
+            }else{
+                res[i]=left[i-1]*right[i+1];
+            }
+        }
+
+        Arrays.stream(res).forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -632,5 +659,7 @@ public class Array {
         }
         array.mergeOverlappingIntervals(arr);
 
+        System.out.println("Product of array except itself: ");
+        array.productOfArrayExceptItself(new int[]{1,2,3,2,5,4});
     }
 }

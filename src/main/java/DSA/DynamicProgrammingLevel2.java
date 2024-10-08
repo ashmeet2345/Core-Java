@@ -368,7 +368,6 @@ public class DynamicProgrammingLevel2 {
     public void longestCommonSubsequence(String a, String b){
         int[][] dp=new int[a.length()+1][b.length()+1];
 
-
         for(int i=a.length()-2;i>=0;i--){
             for(int j=b.length()-2;j>=0;j--){
                 if(a.charAt(i)==a.charAt(j)){
