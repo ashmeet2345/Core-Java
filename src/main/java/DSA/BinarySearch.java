@@ -36,6 +36,37 @@ public class BinarySearch {
         System.out.println(ans);
     }
 
+    public void floorValue(int[] arr, int num){
+        int ans=-1;
+        int low=0;
+        int high=arr.length-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid] <= num){
+                ans=arr[mid];
+                low=low+1;
+            } else {
+                high=high-1;
+            }
+        }
+        System.out.println(ans);
+    }
+
+    public void ceilValue(int[] arr, int num){
+        int ans=-1;
+        int low=0;
+        int high=arr.length-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]>=num){
+                ans=arr[mid];
+                high=high-1;
+            } else {
+                low=low+1;
+            }
+        }
+        System.out.println(ans);
+    }
 
     public void searchElementInRotatedSortedArray1(int[] arr, int ele){
         int low=0;
@@ -226,5 +257,11 @@ public class BinarySearch {
         System.out.println("Single element in a sorted array: "+bs.singleElementInSortedArray(new int[]{1,1,2,2,3,3,4,4,5,5,6}));
 
         System.out.println("Peak Element: "+bs.findPeakElement(new int[]{1,99,6,5,4,3}));
+
+        System.out.print("Floor value: ");
+        bs.floorValue(new int[]{10,20,30,40,50},25);
+
+        System.out.print("Ceil value: ");
+        bs.ceilValue(new int[]{10,20,30,40,50},25);
     }
 }

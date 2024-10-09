@@ -581,6 +581,32 @@ public class Array {
         Arrays.stream(res).forEach(s-> System.out.print(s+" "));
     }
 
+    public void trappingRainwater(int[] arr){
+        int leftMax=0;
+        int rightMax=0;
+        int total=0;
+        int left=0;
+        int right=arr.length-1;
+        while(left<=right){
+            if(arr[left]<=arr[right]){
+                if(leftMax > arr[left]){
+                    total+=leftMax-arr[left];
+                } else {
+                    leftMax=arr[left];
+                }
+                left++;
+            } else {
+                if(rightMax > arr[right]){
+                    total+=rightMax-arr[right];
+                } else {
+                    rightMax=arr[right];
+                }
+                right--;
+            }
+        }
+        System.out.println(total);
+    }
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -661,5 +687,8 @@ public class Array {
 
         System.out.println("Product of array except itself: ");
         array.productOfArrayExceptItself(new int[]{1,2,3,2,5,4});
+
+        System.out.print("\nTrapping rainwater: ");
+        array.trappingRainwater(new int[]{0,1,0,2,1,0,1,3,2,1,2,1});
     }
 }
