@@ -279,6 +279,31 @@ public class BinarySearch {
         System.out.println(ans);
     }
 
+    public int totalHours(int[] arr,int hours){
+        int total=0;
+        for(int i=0;i<arr.length;i++){
+            total+=Math.ceil(arr[i]/hours);
+        }
+        return total;
+    }
+
+    public void kokoEatingBananas(int[] arr, int hours){
+        int low=1;
+        int high=arr[arr.length-1];
+        int ans=Integer.MAX_VALUE;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int total=totalHours(arr,mid);
+            if(total<=hours){
+                ans=mid;
+                high=mid-1;
+            } else {
+                low=mid+1;
+            }
+        }
+        System.out.println(ans);
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -314,5 +339,8 @@ public class BinarySearch {
 
         System.out.print("Nth root of any number: ");
         bs.nthRootOfAnyNumber(125,3);
+
+        System.out.print("Koko Eating Bananas: ");
+        bs.kokoEatingBananas(new int[]{3,6,7,11},8);
     }
 }
