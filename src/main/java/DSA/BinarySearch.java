@@ -210,74 +210,73 @@ public class BinarySearch {
         return -1;
     }
 
-    public int findPeakElement(int[] arr){
-        int low=0;
-        int high=arr.length-1;
+    public int findPeakElement(int[] arr) {
+        int low = 0;
+        int high = arr.length - 1;
 
-        if(arr[low]>arr[low+1]){
+        if (arr[low] > arr[low + 1]) {
             return arr[low];
         }
-        if(arr[high]>arr[high-1]){
+        if (arr[high] > arr[high - 1]) {
             return arr[high];
         }
         low++;
         high--;
-        while(low<=high){
-            int mid=low+(high-low)/2;
-            if(arr[mid]>arr[mid-1] && arr[mid]>arr[mid+1]){
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) {
                 return arr[mid];
-            } else if(arr[mid] > arr[mid-1] && arr[mid]<arr[mid+1]){
-                low=mid+1;
+            } else if (arr[mid] > arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+                low = mid + 1;
             } else {
-                high=mid-1;
+                high = mid - 1;
             }
         }
         return -1;
     }
 
-    public double medianOfTwoSortedArraysOfDifferentSizes(int[] arr1,int[] arr2){
-        int n1=arr1.length;
-        int n2=arr2.length;
-        int i=0;
-        int j=0;
-        int n=n1+n2;
-        int ind2=n/2;
-        int ind1=ind2-1;
-        int count=0;
-        int ind1el=-1;
-        int ind2el=-1;
-        while(i<n1 && j<n2){
-            if(arr1[i]<arr2[j]){
-                if(count==ind1) ind1el=arr1[i];
-                if(count==ind2) ind2el=arr1[i];
-                count++;
-                i++;
+    public void sqrtOfANumber(int num){
+        int low=1;
+        int high=num;
+        int ans=0;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(mid*mid <= num){
+                ans=mid;
+                low=mid+1;
             } else {
-                if(count==ind1) ind1el=arr2[i];
-                if(count==ind2) ind2el=arr2[i];
-                count++;
-                j++;
+                high=mid-1;
             }
         }
-        while(i<n1){
-            if(count==ind1) ind1el=arr1[i];
-            if(count==ind2) ind2el=arr1[i];
-            count++;
-            i++;
-        }
+        System.out.println(ans);
+    }
 
-        while(j<n2){
-            if(count==ind1) ind1el=arr2[i];
-            if(count==ind2) ind2el=arr2[i];
-            count++;
-            j++;
-        }
 
-        if(n%2==1){
-            return ind2el;
+    public int exponential(int a, int n){
+        if(n==1){
+            return a;
+        }
+        if(n%2==0){
+            return exponential(a,n/2)*exponential(a,n/2);
         } else {
-            return (double)(ind1el+ind2el)/2.0;
+            return exponential(a,n/2)*exponential(a,n/2)*a;
         }
+    }
+
+    public void nthRootOfAnyNumber(int num, int root){
+        int low=1;
+        int high=num;
+        int ans=0;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(exponential(mid,root) <= num){
+                ans=mid;
+                low=mid+1;
+            } else {
+                high=mid-1;
+            }
+        }
+        System.out.println(ans);
     }
 
     public static void main(String[] args) {
@@ -309,5 +308,11 @@ public class BinarySearch {
 
         System.out.print("First and last occurence: ");
         bs.findFirstAndLastOccurences(new int[]{2,8,8,8,8,8,11,13},10);
+
+        System.out.print("Square root of a number (Floor value) : ");
+        bs.sqrtOfANumber(27);
+
+        System.out.print("Nth root of any number: ");
+        bs.nthRootOfAnyNumber(125,3);
     }
 }
