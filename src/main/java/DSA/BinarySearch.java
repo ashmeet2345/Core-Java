@@ -68,6 +68,49 @@ public class BinarySearch {
         System.out.println(ans);
     }
 
+    public int firstOccurence(int[] arr, int n, int num){
+        int ans=-1;
+        int low=0;
+        int high=n-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid] == num){
+                ans=mid;
+                high=mid-1;
+            } else if(arr[mid] < num){
+                low=mid+1;
+            } else {
+                high=mid-1;
+            }
+        }
+        return ans;
+    }
+
+    public int lastOccurence(int[] arr, int n, int num){
+        int ans=-1;
+        int low=0;
+        int high=n-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid] == num){
+                ans=mid;
+                low=mid+1;
+            } else if(arr[mid] > num){
+                high=mid-1;
+            } else {
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+
+    public void findFirstAndLastOccurences(int[] arr, int num){
+        int n=arr.length;
+        int first=firstOccurence(arr,n,num);
+        int last=lastOccurence(arr,n,num);
+        System.out.println(first+","+last);
+    }
+
     public void searchElementInRotatedSortedArray1(int[] arr, int ele){
         int low=0;
         int high=arr.length-1;
@@ -263,5 +306,8 @@ public class BinarySearch {
 
         System.out.print("Ceil value: ");
         bs.ceilValue(new int[]{10,20,30,40,50},25);
+
+        System.out.print("First and last occurence: ");
+        bs.findFirstAndLastOccurences(new int[]{2,8,8,8,8,8,11,13},10);
     }
 }
