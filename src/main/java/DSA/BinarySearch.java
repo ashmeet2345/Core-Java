@@ -1,5 +1,7 @@
 package DSA;
 
+import java.util.Arrays;
+
 public class BinarySearch {
 
     public void search(int[] arr,int ele){
@@ -329,6 +331,39 @@ public class BinarySearch {
         System.out.println(ans);
     }
 
+    public int findDays(int[] arr, int cap){
+        int days=1;
+        int load=0;
+        for(int i=0;i<arr.length;i++){
+            if(load+arr[i]>cap){
+                days+=1;
+                load=arr[i];
+            } else {
+                load+=arr[i];
+            }
+        }
+        return days;
+    }
+
+    public void leastCapacityToShipPackagesWithinDDays(int[] arr, int days){
+        int low=0;
+        int sum=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+        }
+        int high=sum;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int minDays=findDays(arr,mid);
+            if(minDays <= days){
+                high=mid-1;
+            } else {
+                low=mid+1;
+            }
+        }
+        System.out.println(low);
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -370,5 +405,8 @@ public class BinarySearch {
 
         System.out.print("Find the smallest divisor given a threshold: ");
         bs.smallestDivisorGivenAThreshold(new int[]{1,2,5,9},7);
+
+        System.out.print("Least capacity to ship packages within D days: ");
+        bs.leastCapacityToShipPackagesWithinDDays(new int[]{1,2,3,4,5,6,7,8,9,10},5);
     }
 }
