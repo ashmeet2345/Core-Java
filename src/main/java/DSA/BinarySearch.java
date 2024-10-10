@@ -304,6 +304,31 @@ public class BinarySearch {
         System.out.println(ans);
     }
 
+    public int findDivisor(int[] arr, int divisor){
+        int total=0;
+        for(int i=0;i<arr.length;i++){
+            total+=Math.ceil(arr[i]/divisor);
+        }
+        return total;
+    }
+
+    public void smallestDivisorGivenAThreshold(int[] arr, int threshold){
+        int low=0;
+        int high=arr[arr.length-1];
+        int ans=0;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int divisor=findDivisor(arr,mid);
+            if(divisor<=threshold){
+                ans=mid;
+                high=mid-1;
+            } else {
+                low=mid+1;
+            }
+        }
+        System.out.println(ans);
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -342,5 +367,8 @@ public class BinarySearch {
 
         System.out.print("Koko Eating Bananas: ");
         bs.kokoEatingBananas(new int[]{3,6,7,11},8);
+
+        System.out.print("Find the smallest divisor given a threshold: ");
+        bs.smallestDivisorGivenAThreshold(new int[]{1,2,5,9},7);
     }
 }
