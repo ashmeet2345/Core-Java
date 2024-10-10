@@ -364,6 +364,24 @@ public class BinarySearch {
         System.out.println(low);
     }
 
+
+    public void kthMissingPositiveNumber(int[] arr, int k){
+        int low=0;
+        int high=arr.length-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int missing=arr[mid]-mid+1;
+            if(missing < k){
+                low=mid+1;
+            } else {
+                high=mid-1;
+            }
+        }
+
+        //it has to be derived properly, there's some calculation, after which this result is concluded.
+        System.out.println(low+k);
+    }
+
     public static void main(String[] args) {
         BinarySearch bs=new BinarySearch();
         System.out.print("Binary Search: ");
@@ -408,5 +426,8 @@ public class BinarySearch {
 
         System.out.print("Least capacity to ship packages within D days: ");
         bs.leastCapacityToShipPackagesWithinDDays(new int[]{1,2,3,4,5,6,7,8,9,10},5);
+
+        System.out.print("Kth Missing positive number: ");
+        bs.kthMissingPositiveNumber(new int[]{2,3,4,7,11},5);
     }
 }
