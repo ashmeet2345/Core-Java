@@ -470,7 +470,7 @@ public class DynamicProgrammingLevel2 {
         System.out.println(length);
     }
 
-    public void kadanesAlgorithm(int[] arr){
+    public int kadanesAlgorithm(int[] arr){
         int curr=arr[0];
         int over=arr[0];
         for(int i=1;i<arr.length;i++){
@@ -482,7 +482,7 @@ public class DynamicProgrammingLevel2 {
 
             over=Math.max(over,curr);
         }
-        System.out.println(over);
+        return over;
     }
 
     public void wildcardMatching(String s, String p){
@@ -507,6 +507,36 @@ public class DynamicProgrammingLevel2 {
             }
         }
         System.out.println(dp[0][0]);
+    }
+
+    public int sum(int[] arr){
+        int sum=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+        }
+        return sum;
+    }
+
+    public void kadanesFor2(int[] arr){
+        int[] arr2=new int[arr.length*2];
+        for(int i=0;i<arr.length;i++){
+            arr2[i]=arr[i];
+        }
+        for(int i=0;i<arr.length;i++){
+            arr2[i+arr.length-1]=arr[i];
+        }
+        arr=arr2;
+    }
+
+    public void kConcatenationMaximumSum(int[] arr, int k, int sum){
+        if(k==1){
+            System.out.println(kadanesAlgorithm(arr));
+        }else if(k==2){
+            kadanesFor2(arr);
+            System.out.println(kadanesAlgorithm(arr));
+        }else{
+            System.out.println(kadanesAlgorithm(arr)+(k-2)*sum);
+        }
     }
 
     public static void main(String[] args) {
@@ -585,9 +615,13 @@ public class DynamicProgrammingLevel2 {
         dp.longestPalindromicSubstring("abccbc");
 
         System.out.print("Kadane's Algorithm: ");
-        dp.kadanesAlgorithm(new int[]{4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1});
+        System.out.println(dp.kadanesAlgorithm(new int[]{4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1}));
 
-        System.out.print("Wildcard matching: ");
+        System.out.print("\nWildcard matching: ");
         dp.wildcardMatching("baaabab","pa*a?");
+
+        System.out.println("K concatenation Maximum sum: ");
+        int[] a={4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1};
+        dp.kConcatenationMaximumSum(a,2, dp.sum(a));
     }
 }
