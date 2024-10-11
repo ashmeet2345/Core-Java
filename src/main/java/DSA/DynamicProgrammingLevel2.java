@@ -539,6 +539,41 @@ public class DynamicProgrammingLevel2 {
         }
     }
 
+    public void maximumSumSubarrayWithAtleastSizeK(int[] arr, int k){
+        int[] sum=new int[arr.length];
+        sum[0]=arr[0];
+        int csum=arr[0];
+        for(int i=1; i<arr.length;i++){
+            if(csum>0){
+                csum+=arr[i];
+            }else{
+                csum=arr[i];
+            }
+            sum[i]=csum;
+        }
+
+        int kSum=0;
+        for(int i=0;i<k;i++){
+            kSum+=sum[i];
+        }
+        int mxSum=Integer.MIN_VALUE;
+
+        if(kSum>mxSum){
+            mxSum=kSum;
+        }
+
+        for(int i=k;i<sum.length;i++){
+            kSum+=arr[i]-arr[i-k];
+            if(kSum>mxSum){
+                mxSum=kSum;
+            }
+            if(kSum+sum[i-k]>mxSum){
+                mxSum=kSum+sum[i-k];
+            }
+        }
+        System.out.println(mxSum);
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -623,5 +658,8 @@ public class DynamicProgrammingLevel2 {
         System.out.println("K concatenation Maximum sum: ");
         int[] a={4,3,-2,6,-14,7,-1,4,5,7,-10,2,9,-10,-5,-9,6,1};
         dp.kConcatenationMaximumSum(a,2, dp.sum(a));
+
+        System.out.println("Maximum Sum subarray with atleast K: ");
+        dp.maximumSumSubarrayWithAtleastSizeK(a,2);
     }
 }
