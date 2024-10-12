@@ -618,6 +618,25 @@ public class DynamicProgrammingLevel2 {
 
     }
 
+    public void optimalStrategyForGame(int[] arr){
+        int[][] dp=new int[arr.length][arr.length];
+        for(int g=0;g<dp.length;g++){
+            for(int i=0,j=g;j<dp[0].length;i++,j++){
+                if(g==0){
+                    dp[i][j]=arr[i];
+                }else if(g==1){
+                    dp[i][j]=Math.max(arr[i],arr[j]);
+                }else{
+                    int firstTaken=arr[i]+Math.min(dp[i+2][j],dp[i+1][j-1]);
+                    int lastTaken=arr[j]+Math.min(dp[i][j-2],dp[i+1][j-1]);
+                    dp[i][j]=Math.max(firstTaken,lastTaken);
+                }
+            }
+        }
+
+        System.out.println(dp[0][arr.length-1]);
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -708,5 +727,8 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Egg dropping problem: ");
         dp.eggDroppingProblem(7,3);
+
+        System.out.print("Optimal Strategy for a game: ");
+        dp.optimalStrategyForGame(new int[]{20,30,2,10});
     }
 }
