@@ -574,6 +574,50 @@ public class DynamicProgrammingLevel2 {
         System.out.println(mxSum);
     }
 
+    public void eggDroppingProblem(int floors, int eggs){
+        Integer[][] dp=new Integer[eggs+1][floors+1];
+        /*
+        * Base Cases
+        * When floors==0, total trys to find the critical height =0
+        * when eggs ==0, we might not be able to find ch, because we have no eggs
+        * when eggs == 1, CH=total number of floors
+        * when floors ==1, CH=1;*/
+
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                if(i==0 || j==0) {
+                    dp[i][j]=0;
+                }
+                else if(i==1){
+                    dp[i][j]=j;
+                }else if(j==1){
+                    dp[i][j]=1;
+                }else{
+                    int low=1;
+                    int high=j;
+                    int temp=0;
+                    int min=Integer.MAX_VALUE;
+                    while(low<=high){
+                        int mid=(low+high)/2;
+                        int left=dp[i-1][mid-1];
+                        int right=dp[i][j-mid];
+                        temp=1+Math.max(left,right);
+                        if(left<right){
+                            low=mid+1;
+                        }else{
+                            high=mid-1;
+                        }
+                        min=Math.min(min,temp);
+                    }
+                    dp[i][j]=min;
+                }
+            }
+        }
+
+        System.out.println(dp[dp.length-1][dp[0].length-1]);
+
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -661,5 +705,8 @@ public class DynamicProgrammingLevel2 {
 
         System.out.println("Maximum Sum subarray with atleast K: ");
         dp.maximumSumSubarrayWithAtleastSizeK(a,2);
+
+        System.out.print("Egg dropping problem: ");
+        dp.eggDroppingProblem(7,3);
     }
 }
