@@ -67,6 +67,15 @@ public class LinkedList {
         }
     }
 
+    public void reverse(Node node){
+        if(node.next==null){
+            head=node;
+            return;
+        }
+        reverse(node.next);
+        node.next.next=node;
+    }
+
     public static void main(String[] args) {
         LinkedList list=new LinkedList();
         list.insertFirst(10);
@@ -75,6 +84,7 @@ public class LinkedList {
         list.insertFirst(40);
         list.insertFirst(50);
         list.insertAtKPosition(80,3);
+        //list.reverse(head);
         list.display();
 
     }
