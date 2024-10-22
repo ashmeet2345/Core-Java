@@ -330,7 +330,7 @@ public class Stacks {
         System.out.println(pot);
     }
 
-    public static void mergeOverlappingInterals() {
+    public void mergeOverlappingInterals() {
         int[][] arr = new int[5][2];
 
         Pair[] pairs = new Pair[5];
@@ -391,5 +391,4 @@ public class Stacks {
             //infixConversions();
             // celebrity();
         }
-    }
 }
