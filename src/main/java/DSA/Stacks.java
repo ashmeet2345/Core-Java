@@ -377,6 +377,34 @@ public class Stacks {
         }
 
 
+        public int minStack(int data, boolean push){
+            int min=Integer.MAX_VALUE;
+            Stack<Integer> st=new Stack<>();
+            if(push){
+                if(st.size()==0){
+                    min=data;
+                    st.add(data);
+                } else {
+                    if(data < min){
+                        st.add(2*data - min);
+                        min=data;
+                    } else {
+                        st.add(data);
+                    }
+                }
+            } else {
+                if(st.peek() > min){
+                    return st.pop();
+                } else {
+                    min=2*min - st.peek();
+                    return st.pop();
+                }
+            }
+            return min;
+        }
+
+
+
         public static void main(String[] args) {
             //duplicacy();
             //System.out.println(balanced());
