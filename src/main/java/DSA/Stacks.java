@@ -470,14 +470,48 @@ class Pair implements Comparable<Pair> {
         Arrays.stream(ans).forEach(s-> System.out.print(s+" "));
     }
 
+    public void aestroidCollisions(int[] arr){
+        Stack<Integer> st=new Stack<>();
+        List<Integer> list=new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>0){
+                st.add(arr[i]);
+            } else if(arr[i]<0){
+                int val=Math.abs(arr[i]);
+                if(st.size()>0){
+                    if(val>st.peek()){
+                        while(!st.empty() && st.peek()<=val){
+                            st.pop();
+                        }
+                    }else if(val<st.peek()){
+                        continue;
+                    }else{
+                        st.pop();
+                        continue;
+                    }
+                } else {
+                    st.add(arr[i]);
+                }
+            }
+        }
+
+        while(!st.empty()){
+            list.add(st.pop());
+        }
+
+        list.stream().forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         Stacks st=new Stacks();
         System.out.print("Next Greater Element I: ");
         st.nextGreaterElement(new int[]{4,12,5,3,1,2,5,3,1,2,4,6});
 
-        System.out.println("\nNext Greater Element II: ");
+        System.out.print("\nNext Greater Element II: ");
         st.nextGreaterElementII(new int[]{2,10,12,1,11});
 
+        System.out.print("\nAestroid Collision: ");
+        st.aestroidCollisions(new int[]{4,7,1,1,2,-3,-7,17,15,-18,-19});
 
     }
 }
