@@ -413,10 +413,14 @@ class Pair implements Comparable<Pair> {
                 ans[i]=st.peek();
                 st.add(arr[i]);
             } else {
-                while(arr[i]>st.peek()){
+                while(!st.empty() && st.peek()<=arr[i]){
                     st.pop();
                 }
-                ans[i]=st.peek();
+                if(st.size()>0){
+                    ans[i]=st.peek();
+                } else {
+                    ans[i]=-1;
+                }
                 st.add(arr[i]);
             }
         }
@@ -424,10 +428,56 @@ class Pair implements Comparable<Pair> {
         Arrays.stream(ans).forEach(s-> System.out.print(s+" "));
     }
 
+    public void nextGreaterElementII(int[] arr){
+        Stack<Integer> st=new Stack<>();
+        int[] ans=new int[arr.length];
+        int n=arr.length;
+        st.add(arr[n-1]);
+        for(int i=2*n-2;i>=0;i--){
+            int ind=i%n;
+            if(i>=n){
+                if(arr[ind]<st.peek()){
+                    st.add(arr[ind]);
+                } else {
+                    while(!st.empty() && st.peek()<=arr[ind]){
+                        st.pop();
+                    }
+                    st.add(arr[ind]);
+                }
+            } else {
+                if(st.size()>0){
+                    if(arr[i]<st.peek()){
+                        ans[i]=st.peek();
+                        st.add(arr[i]);
+                    } else {
+                        while(!st.empty() && st.peek()<=arr[i]){
+                            st.pop();
+                        }
+                        if(!st.empty()){
+                            ans[i]=st.peek();
+                        } else {
+                            ans[i]=-1;
+                        }
+                        st.add(arr[i]);
+                    }
+                } else {
+                    ans[i]=-1;
+                    st.add(arr[i]);
+                }
+            }
+        }
+
+        Arrays.stream(ans).forEach(s-> System.out.print(s+" "));
+    }
 
     public static void main(String[] args) {
         Stacks st=new Stacks();
+        System.out.print("Next Greater Element I: ");
         st.nextGreaterElement(new int[]{4,12,5,3,1,2,5,3,1,2,4,6});
+
+        System.out.println("\nNext Greater Element II: ");
+        st.nextGreaterElementII(new int[]{2,10,12,1,11});
+
 
     }
 }
