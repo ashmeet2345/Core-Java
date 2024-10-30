@@ -505,6 +505,7 @@ class Pair implements Comparable<Pair> {
     public static void main(String[] args) {
         Stacks st=new Stacks();
         System.out.print("Next Greater Element I: ");
+
         st.nextGreaterElement(new int[]{4,12,5,3,1,2,5,3,1,2,4,6});
 
         System.out.print("\nNext Greater Element II: ");
