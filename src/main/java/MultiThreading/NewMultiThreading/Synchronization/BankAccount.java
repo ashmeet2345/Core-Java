@@ -31,7 +31,8 @@ public class BankAccount {
         System.out.println(Thread.currentThread().getName()+" attempting to withdraw "+amount);
         try {
             if(lock.tryLock(4000, TimeUnit.MILLISECONDS)){
-                //here the tryLock will check if the lock is available within the mentioned time limit, then
+                //here the tryLock will check if the lock is available within the mentioned time limit
+                // (in this case, 4 seconds), then
                 //it will not throw any exception else, if the wait time is over and still the lock is not free,
                 //it will throw an exception
                 if(balance>=amount){

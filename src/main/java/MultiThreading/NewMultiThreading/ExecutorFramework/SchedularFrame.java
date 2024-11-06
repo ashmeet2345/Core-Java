@@ -11,7 +11,7 @@ public class SchedularFrame {
         schedular.schedule(()->{
             System.out.println("Initiating shutdown");
             schedular.shutdown();
-        },20,TimeUnit.SECONDS);
+        },10,TimeUnit.SECONDS);
     }
 
 
