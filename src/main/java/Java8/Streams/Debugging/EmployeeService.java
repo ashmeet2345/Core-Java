@@ -18,6 +18,8 @@ public class EmployeeService {
 
         System.out.println(names);
 
+        Employee name=employeeList.stream().filter(s -> s.getId()==4).findFirst().orElseThrow();
+        System.out.println(name);
         //We can debugg streams as follows
             /*1- place debugging breakpoint at point from where stream api starts executing.
             (in above example, line 12)

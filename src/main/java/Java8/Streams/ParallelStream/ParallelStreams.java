@@ -11,13 +11,13 @@ public class ParallelStreams {
         //The order of execution, however is not under our control.
 
         long start=System.currentTimeMillis();
-        IntStream.range(1,1000).forEach(s-> System.out.print(s+" "));
+        IntStream.rangeClosed(1,1000).forEach(s-> System.out.print(s+" "));
         long end=System.currentTimeMillis();
 
         System.out.println("\nTime taken by simple stream: "+(end-start)+" milliseconds");
 
          start=System.currentTimeMillis();
-         IntStream.range(1,1000).parallel().forEach(s-> System.out.print(s+" "));
+         IntStream.rangeClosed(1,1000).parallel().forEach(s-> System.out.print(s+" "));
          end=System.currentTimeMillis();
 
          System.out.println("\nTime taken by parallel stream: "+(end-start)+" milliseconds");
