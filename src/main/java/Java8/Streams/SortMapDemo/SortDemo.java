@@ -5,6 +5,7 @@ import Java8.Compare.Book;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class SortDemo {
     public static void main(String[] args) {
@@ -34,5 +35,7 @@ public class SortDemo {
         //If we want to sort wrt to their names, then
         System.out.println();
         booksList.stream().sorted((o1,o2)->o1.getName().compareTo(o2.getName())).forEach(System.out::println);
+
+
     }
 }

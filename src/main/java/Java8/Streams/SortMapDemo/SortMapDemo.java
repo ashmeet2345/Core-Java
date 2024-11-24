@@ -27,8 +27,11 @@ public class SortMapDemo {
         }*/
 
         //Modern way with the help of streams apis
-        mp.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(i-> System.out.println(i.getKey()+","+i.getValue()));
+       // mp.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(i-> System.out.println(i.getKey()+","+i.getValue()));
 
+
+        mp.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .forEach(i -> System.out.println(i.getKey()+","+i.getValue()));
         //Now we will sort the books based on their price using maps.
         Books bookList=new Books();
         Map<Book,Integer> map=new HashMap<>();

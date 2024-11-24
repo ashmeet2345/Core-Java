@@ -67,7 +67,7 @@ public class ComparableVsComparator implements Comparable<ComparableVsComparator
 
         System.out.println(l);
 
-        //Comparable is used where only one attribute is being compared.
+        //UsingComparable is used where only one attribute is being compared.
         //In case of comparator, we can compare multiple attributes of the instance.
 
     }

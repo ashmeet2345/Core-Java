@@ -117,7 +117,7 @@ public class Basics {
     }
 }
 
-/*class Pair implements Comparable<Pair>{
+/*class Pair implements UsingComparable<Pair>{
     int s1;
     int s2;
     Pair(int s1,int s2){

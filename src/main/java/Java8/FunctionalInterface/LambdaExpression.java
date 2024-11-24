@@ -18,6 +18,12 @@ public class LambdaExpression{
             System.out.println(a+b);
         };
 
-        face.sum(20,30);
+       // face.sum(20,30);
+
+        multiplication multiplicate=(int a, int b) -> {
+            System.out.println(a*b);
+        } ;
+
+        multiplicate.multiply(20,30);
     }
 }

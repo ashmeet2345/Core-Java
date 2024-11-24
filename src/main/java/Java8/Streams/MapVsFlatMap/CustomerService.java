@@ -14,8 +14,5 @@ public class CustomerService {
 
         customers.stream().flatMap(u->u.getPhone().stream()).forEach(s-> System.out.print(s+" "));
 
-        String val=null;
-        String value=Optional.ofNullable(val).orElse("Value not found");
-        System.out.println(value);
     }
 }
