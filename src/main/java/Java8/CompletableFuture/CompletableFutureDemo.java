@@ -10,7 +10,7 @@ public class CompletableFutureDemo {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        //Demertis of using Futures (reason why using completealbeFuture is good)
+        //Demertis of using Futures (reason why using completalbeFuture is good)
         /*
         * It cannot be manually completed
         * Multiple futures cannot be chained together
