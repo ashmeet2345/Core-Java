@@ -20,7 +20,7 @@ public class Dynamicprogramming {
         int a=fibonacci(n-1,dp);
         int b=fibonacci(n-2,dp);
         dp[n]=a+b;
-        return a+b;
+        return dp[n];
     }
 
     public int climbStairsRecursiveDp(int n,int[] dp){
@@ -80,19 +80,24 @@ public class Dynamicprogramming {
 
     public int climbStairsWithMinimumSteps(int n,int[] arr){
         Integer[] dp=new Integer[n+1];
-        dp[n]=1;
+        dp[n]=0;
 
         for(int i=n-1;i>=0;i--){
-            int min=Integer.MAX_VALUE;
-            for(int j=1;j<=arr[i] && i+j<dp.length;j++){
-                if(dp[i+j]!=null)
-                    if(dp[i+j]<min){
-                        min=dp[i+j];
-                    }
+            if(arr[i]>0){
+                int min=Integer.MAX_VALUE;
+                for(int j=1;j<=arr[i] && i+j<dp.length;j++){
+                    if(dp[i+j]!=null)
+                        if(dp[i+j]<min){
+                            min=dp[i+j];
+                        }
                 }
-            dp[i]=min+1;
+                if(min!=Integer.MAX_VALUE){
+                    dp[i]=min+1;
+                } else {
+                    dp[0]=null;
+                }
+            }
         }
-
         return dp[0];
     }
 
@@ -476,8 +481,8 @@ public class Dynamicprogramming {
         Dynamicprogramming dp=new Dynamicprogramming();
         int[][] arr={{1,4,8},{5,4,8},{1,7,2}};
 
-        System.out.println(dp.fibonacci(12,new int[13]));
-        System.out.println("Climb Stairs: "+dp.climbStairsHelper(10,new int[11],true));
+        System.out.println(dp.fibonacci(10,new int[13]));
+        System.out.println("Climb Stairs: "+dp.climbStairsHelper(6,new int[11],true));
         System.out.println("Climb stairs with jumps: "+dp.climbStairsWithJumps(5,new int[]{1,1,1,1,1}));
         System.out.println("Climb stairs with minimum steps: "+dp.climbStairsWithMinimumSteps(5,new int[]{1,1,3,1,1}));
         System.out.println("Minimum Cost path: "+dp.minimumCostPath(arr));
