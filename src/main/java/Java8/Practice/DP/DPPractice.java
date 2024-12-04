@@ -131,7 +131,7 @@ public class DPPractice {
         for(int i=1;i<=coins.length;i++){
             for(int j=1;j<dp[0].length;j++){
                 if(j-coins[i-1]>=0){
-                    dp[i][j]=Math.min(1+dp[i][j-coins[i-1]],dp[i-1][j]);
+                    dp[i][j]=Math.min(1+dp[i-1][j-coins[i-1]],dp[i-1][j]);
                 }
             }
         }
@@ -142,7 +142,7 @@ public class DPPractice {
             }
             System.out.println();
         }
-        System.out.println(dp[coins.length][amount]+1);
+        System.out.println(dp[coins.length][amount]);
     }
 
     public static void coinChangePermutation(int num,int[] arr){
@@ -169,7 +169,7 @@ public class DPPractice {
         minimumCostPath(arr);
         targetSumSubset(new int[]{4,2,7,1,3},10);
         coinChangeCombination(7,new int[]{2,1});
-        coinChange(7,new int[]{1,2,5});
+        coinChange(11,new int[]{1,2,5});
         coinChangePermutation(7,new int[]{2,3,5});
     }
 }

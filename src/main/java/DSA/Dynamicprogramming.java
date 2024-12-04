@@ -224,6 +224,32 @@ public class Dynamicprogramming {
         System.out.println(dp[w.length][cap]+"\n");
     }
 
+    public void knapsack01(int cap, int[] weight, int[] val){
+        int[][] dp=new int[val.length+1][cap+1];
+        for(int i=0;i<dp.length;i++){
+            dp[i][0]=0;
+        }
+
+        for(int i=0;i<dp[0].length;i++){
+            dp[0][i]=0;
+        }
+        for(int i=1;i<dp.length;i++){
+            for(int j=1;j<dp[0].length;j++){
+                int value=j-weight[i-1];
+                if(value>=0){
+                    if(dp[i-1][value]+val[i-1]>dp[i-1][j]){
+                        dp[i][j]=dp[i-1][value]+val[i-1];
+                    } else {
+                        dp[i][j]=dp[i-1][j];
+                    }
+                } else {
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        System.out.println(dp[val.length][cap]);
+    }
+
     public void unboundedKnapsack(int cap, int[] val,int[] weight){
         int[] dp=new int[cap+1];
         Arrays.fill(dp,0);
@@ -493,6 +519,9 @@ public class Dynamicprogramming {
         dp.coinChangeCombination(7,new int[]{2,3,5});
         System.out.print("Coin change permutation: ");
         dp.coinChangePermutation(10,new int[]{2,3,5,6});
+
+        System.out.print("Knapsack: ");
+        dp.knapsack01(7, new int[]{2,5,1,3,4},new int[]{15,14,10,45,30});
 
         System.out.print("Unbounded Knapsack: ");
         dp.unboundedKnapsack(7,new int[]{2,5,1,3,4},new int[]{15,14,10,45,30});
