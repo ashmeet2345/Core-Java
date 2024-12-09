@@ -581,6 +581,7 @@ public class Array {
         Arrays.stream(res).forEach(s-> System.out.print(s+" "));
     }
 
+
     public void trappingRainwater(int[] arr){
         int leftMax=0;
         int rightMax=0;
@@ -605,6 +606,49 @@ public class Array {
             }
         }
         System.out.println(total);
+    }
+
+    public void nextGreaterElementIII(){
+        String str="2147483648";
+        if(str.length()==1){
+            System.out.println("-1");
+            return;
+        }
+        StringBuilder res=new StringBuilder();
+        char[] arr=str.toCharArray();
+        int index=0;
+        for(int i=arr.length-2;i>=0;i--){
+            int val1=arr[i]-'0';
+            int val2=arr[i+1]-'0';
+            if(val2>val1){
+                for(int j=arr.length-1;j>i;j--){
+                    int val3=arr[j]-'0';
+                    if(val1<val3){
+                        char temp=arr[i];
+                        arr[i]=arr[j];
+                        arr[j]=temp;
+                        break;
+                    }
+                }
+            } else {
+                if(i==0){
+                    System.out.println("-1");
+                    return;
+                }
+                continue;
+            }
+
+            index=i+1;
+            break;
+        }
+        for(int i=0;i<index;i++){
+            res.append(arr[i]);
+        }
+        for(int i=arr.length-1;i>=index;i--){
+            res.append(arr[i]);
+        }
+        long ans=Long.parseLong(res.toString());
+        System.out.println(ans>Integer.MAX_VALUE?"-1":(int)ans);
     }
 
     public static void main(String[] args) {
@@ -669,7 +713,7 @@ public class Array {
         array.majorityElementII(new int[]{2,1,1,1,1,3,2,2,2,2});
 
         System.out.println("\nThree sum: ");
-        array.threeSum(new int[]{-2,-2,-2,-1,-1,-1,0,0,0,2,2,2,2});
+        array.threeSum(new int[]{-1,0,1,2,-1,-4});
 
         System.out.println("\nFour sum: ");
         array.fourSum(new int[]{1,1,1,2,2,2,3,3,3,4,4,4,5,5},8);
@@ -691,6 +735,8 @@ public class Array {
         System.out.print("\nTrapping rainwater: ");
         array.trappingRainwater(new int[]{0,1,0,2,1,0,1,3,2,1,2,1});
 
+        System.out.print("\nNext Greater Element III: ");
+        array.nextGreaterElementIII();
         //Two or three problems will be pushed on github tomorrow.
 
     }

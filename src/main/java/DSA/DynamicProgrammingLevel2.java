@@ -2,6 +2,8 @@ package DSA;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DynamicProgrammingLevel2 {
@@ -637,8 +639,36 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[0][arr.length-1]);
     }
 
+    public void burstBalloon(int[] arr) {
+        int[][] dp = new int[arr.length][arr.length];
+
+        for (int g = 0; g < dp.length; g++) {
+            for (int i = 0, j = g; j < dp.length; i++, j++) {
+                int max=Integer.MIN_VALUE;
+                for(int k=i;k<=j;k++){
+                    int left=(k==i)?0:dp[i][k-1];
+                    int right=(k==j)?0:dp[k+1][j];
+                    int val=arr[k];
+                    if(i>0){
+                        val*=arr[i-1];
+                    }
+                    if(j<dp.length-1){
+                        val*=arr[j+1];
+                    }
+                    int total=left+right+val;
+                    max=Math.max(total,max);
+                }
+                dp[i][j]=max;
+            }
+        }
+
+        System.out.println(dp[0][dp.length-1]);
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
+
+        PriorityQueue<Integer> pq=new PriorityQueue<>();
 
         int[][] matrix={{0,1,0,1,0,1},
                 {1,0,1,0,1,0},
@@ -686,7 +716,7 @@ public class DynamicProgrammingLevel2 {
         dp.maximumNonOverlappingBridges(arr);
 
         System.out.print("Perfect sum of squares: ");
-        dp.perfectSquaresSum(16);
+        dp.perfectSquaresSum(12);
 
         System.out.print("Catalan number: ");
         dp.catalanNumbers(5);
@@ -730,5 +760,8 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Optimal Strategy for a game: ");
         dp.optimalStrategyForGame(new int[]{20,30,2,10});
+
+        System.out.print("Burst Balloon: ");
+        dp.burstBalloon(new int[]{3,1,5,8});
     }
 }
