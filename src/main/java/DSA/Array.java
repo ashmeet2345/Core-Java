@@ -651,6 +651,20 @@ public class Array {
         System.out.println(ans>Integer.MAX_VALUE?"-1":(int)ans);
     }
 
+    public void maxChunksToSortArray(int[] arr){
+        int count=0;
+        int max=0;
+        for(int i=0;i<arr.length-1;i++){
+            max=Math.max(max,arr[i]);
+            if(max==i){
+                count++;
+            }
+        }
+
+        System.out.println(count);
+    }
+
+
     public static void main(String[] args) {
         Array array=new Array();
 
@@ -739,5 +753,6 @@ public class Array {
         array.nextGreaterElementIII();
         //Two or three problems will be pushed on github tomorrow.
 
+        System.out.print("Maximum number of chunks II: ");
     }
 }

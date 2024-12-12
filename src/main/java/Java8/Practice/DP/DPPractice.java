@@ -400,6 +400,25 @@ public class DPPractice {
         return count>nums.length/2 ? num:0;
     }
 
+    public static void rodCutting(int n, int[] price){
+        int[] dp=new int[n+1];
+        dp[0]=0;
+        dp[1]=price[0];
+        for(int i=2;i<dp.length;i++){
+            int max=Integer.MIN_VALUE;
+            for(int j=1;j<i;j++){
+                max=Math.max(max,dp[i-j]+price[j-1]);
+            }
+            if(max>price[i-1]){
+                dp[i]=max;
+            } else {
+                dp[i]=price[i-1];
+            }
+        }
+
+        Arrays.stream(dp).forEach(s-> System.out.print(s+" "));
+    }
+
     public static void main(String[] args) {
         int[][] arr={{1,4,8},{5,4,8},{1,7,2}};
         System.out.println(fib(10,new int[11]));
@@ -425,5 +444,7 @@ public class DPPractice {
 
         System.out.println("Majority Element: "+majorityElement(new int[]{2,2,1,1,1,2,2}));
 
+        System.out.println("Rod Cutting: ");
+        rodCutting(8, new int[]{1,5,8,9,10,17,17,20});
     }
 }
