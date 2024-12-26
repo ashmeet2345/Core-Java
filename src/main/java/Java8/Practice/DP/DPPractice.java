@@ -149,6 +149,44 @@ public class DPPractice {
         System.out.println(dp[coins.length][amount]);
     }
 
+    public static String longestCommonSubsequence(String str1, String str2){
+        StringBuilder s=new StringBuilder(str2);
+        String str=s.reverse().toString();
+        int n=str1.length();
+        int m=str2.length();
+        int[][] dp=new int[m+1][n+1];
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(str2.charAt(i-1)==str1.charAt(j-1)){
+                    dp[i][j]=1+dp[i-1][j-1];
+                } else {
+                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+
+        System.out.println(dp[m][n]);
+        return printingLCS(dp,n,m,str1,str2);
+    }
+
+    public static String printingLCS(int[][] dp, int n, int m, String str1, String str2){
+        StringBuilder res=new StringBuilder();
+        int i=1;
+        int j=1;
+        while(i<=m && j<=n){
+            if(str2.charAt(i-1)==str1.charAt(j-1)){
+                res.append(str2.charAt(i-1));
+                i++;
+                j++;
+            } else {
+                res.append(str1.charAt(j-1));
+                res.append(str2.charAt(i-1));
+                j++;
+            }
+        }
+        return res.toString();
+    }
+
     public static void coinChangePermutation(int num,int[] arr){
         int[] dp=new int[num+1];
         dp[0]=1;
@@ -419,6 +457,33 @@ public class DPPractice {
         Arrays.stream(dp).forEach(s-> System.out.print(s+" "));
     }
 
+    public static void shortestCommonSupersequence(String str1, String str2){
+        String lcs=longestCommonSubsequence(str1,str2);
+
+        System.out.println(lcs.toString());
+    }
+
+    public static void countPalindromicSubsequences(String s){
+        int[][] dp=new int[s.length()][s.length()];
+        for(int g=0;g<dp.length;g++){
+            for(int i=0,j=g;j<dp.length;i++,j++){
+                if(g==0){
+                    dp[i][j]=1;
+                }else if(g==1){
+                    dp[i][j]=s.charAt(i)==s.charAt(j)?3:2;
+                }else{
+                    if(s.charAt(i)==s.charAt(j)){
+                        dp[i][j]=dp[i+1][j]+dp[i][j-1]+1;
+                    } else {
+                        dp[i][j]=dp[i+1][j]+dp[i][j-1]-dp[i+1][j-1];
+                    }
+                }
+            }
+        }
+
+        System.out.println(dp[0][s.length()-1]);
+    }
+
     public static void main(String[] args) {
         int[][] arr={{1,4,8},{5,4,8},{1,7,2}};
         System.out.println(fib(10,new int[11]));
@@ -446,5 +511,14 @@ public class DPPractice {
 
         System.out.println("Rod Cutting: ");
         rodCutting(8, new int[]{1,5,8,9,10,17,17,20});
+
+        System.out.println("\nLongest common subsequence");
+        System.out.println(longestCommonSubsequence("agbcba","abcbga"));
+
+        System.out.println("Shortest common supersequence: ");
+        shortestCommonSupersequence("cab","abac");
+
+        System.out.println("Count palindromic subsequences: ");
+        countPalindromicSubsequences("bccb");
     }
 }

@@ -664,6 +664,228 @@ public class Array {
         System.out.println(count);
     }
 
+    public void maximumProductOfThreeNumbers(int[] arr){
+        int max=Integer.MIN_VALUE;
+        int max1=max;
+        int max2=max;
+        int min1=Integer.MAX_VALUE;
+        int min2=min1;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>=max){
+                max2=max1;
+                max1=max;
+                max=arr[i];
+            } else if(arr[i]>=max1){
+                max2=max1;
+                max1=arr[i];
+            } else if(arr[i]>=max2){
+                max2=arr[i];
+            }
+
+            if(arr[i]<=min1){
+                min2=min1;
+                min1=arr[i];
+            } else if(arr[i]<=min2){
+                min2=arr[i];
+            }
+        }
+
+        System.out.println(Math.max(max*max1*max2,max*min1*min2));
+    }
+
+    public void sortByParity(int[] arr){
+        int i=0;
+        int j=0;
+        while(j<arr.length){
+            if(arr[j]%2==0){
+                int temp=arr[j];
+                arr[j]=arr[i];
+                arr[i]=temp;
+                i++;
+                j++;
+            } else {
+                j++;
+            }
+        }
+
+        Arrays.stream(arr).forEach(s-> System.out.print(s+" "));
+    }
+
+    public void transposeOfMatrixNXN(int[][] matrix){
+        int i=0;
+        int j=0;
+        int k=0;
+        int l=0;
+        int n=matrix.length;
+        while(i!=n-1 && l!=n-1){
+            if(k!=n && j!=n){
+                swapping(matrix, i, j, k, l);
+                k++;
+                j++;
+            } else {
+                i++;
+                l++;
+                k=i;
+                j=l;
+            }
+        }
+
+        i=0;
+        j=0;
+        l=matrix.length-1;
+        while(j<=l){
+            if(i<=matrix.length-1){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[i][l];
+                matrix[i][l]=temp;
+                i++;
+            } else {
+                i=0;
+                j++;
+                l--;
+            }
+        }
+
+        for(int x=0;x<matrix.length;x++){
+            for(int y=0;y<matrix.length;y++){
+                System.out.print(matrix[x][y]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void swapping(int[][] arr, int i, int j, int k, int l){
+        int temp=arr[i][j];
+        arr[i][j]=arr[k][l];
+        arr[k][l]=temp;
+    }
+
+    public void shortestUnsortedContinuousSubarray(int[] arr){
+        
+        int end=-1;
+        int min=arr[0];
+        for(int i=1;i<arr.length;i++){
+            if(arr[i]<min){
+                end=i;
+            } else {
+                min=arr[i];
+            }
+        }
+
+        int st=0;
+        int max=arr[arr.length-1];
+        for(int i=arr.length-2;i>=0;i--){
+            if(arr[i]>max){
+                st=i;
+            } else {
+                max=arr[i];
+            }
+        }
+    }
+
+
+    public void multiplyTwoStrings(String str1, String str2){
+
+        int finalSum=0;
+        int i=str1.length()-1;
+        for(;i>=0;i--){
+            int sum = 0;
+            int carry= 0;
+            int j=str2.length()-1;
+            int ival=i>=0? str1.charAt(i)-'0':0;
+            for(;j>=0;j--){
+                int jval=j>=0? str2.charAt(j)-'0':0;
+                int tenPow=(int)Math.pow(10,j);
+                int mul=(ival*jval)+carry;
+                carry=mul/10;
+                int rem=mul%10;
+                sum+=rem*tenPow;
+            }
+            sum*=(int)Math.pow(10,i);
+            finalSum+=sum;
+        }
+
+        System.out.println(finalSum);
+    }
+
+    public boolean validPalindromeII(String s){
+        int count=0;
+        int i=0;
+        int j=s.length()-1;
+        boolean validPalindrome=true;
+        while(i<=j){
+            if(isPalindrome(s,i,j)){
+                i++;
+                j--;
+            } else {
+                if(count<1){
+                    boolean val1=isPalindrome(s,i+1,j);
+                    boolean val2=isPalindrome(s,i,j-1);
+                    count++;
+                    if(val1){
+                        i++;
+                        continue;
+                    }
+                    if(val2){
+                        j--;
+                        continue;
+                    }
+
+                    if(!val1 && !val2){
+                        validPalindrome=false;
+                        break;
+                    }
+                } else {
+                    validPalindrome=false;
+                    break;
+                }
+            }
+        }
+
+        return validPalindrome;
+    }
+
+    public boolean isPalindrome(String s, int i, int j){
+        return s.charAt(i)==s.charAt(j);
+    }
+
+    public void boatsToSavePeople(int[] people, int limit){
+        int totalBoats=0;
+        int sum=0;
+        for(int i=0;i<people.length;i++){
+            sum+=people[i];
+            if(sum==limit){
+                totalBoats++;
+                sum=0;
+            } else if(sum<limit){
+                continue;
+            } else {
+                totalBoats++;
+                i--;
+                sum=0;
+            }
+        }
+        System.out.println(totalBoats);
+    }
+
+    public int[] twoSum(int[] nums, int target){
+        Arrays.sort(nums);
+
+        int i=0;
+        int j=nums.length-1;
+        while(i<j){
+            int sum=nums[i]+nums[j];
+            if(sum==target){
+                return new int[]{i,j};
+            } else if(sum<target){
+                i++;
+            } else {
+                j--;
+            }
+        }
+
+        return new int[]{};
+    }
 
     public static void main(String[] args) {
         Array array=new Array();
@@ -753,6 +975,23 @@ public class Array {
         array.nextGreaterElementIII();
         //Two or three problems will be pushed on github tomorrow.
 
-        System.out.print("Maximum number of chunks II: ");
+        System.out.println("Maximum product of 3 numbers: ");
+        array.maximumProductOfThreeNumbers(new int[]{-100,-98,-1,2,3,4});
+
+        System.out.println("Sort By Parity: ");
+        array.sortByParity(new int[]{9,3,8,6,7,2,3});
+
+        System.out.println("Transpose of matrix: ");
+        array.transposeOfMatrixNXN(new int[][]{{1,2,3},{4,5,6},{7,8,9}});
+
+        System.out.println("Multiply 2 Strings: ");
+        array.multiplyTwoStrings("220","12");
+
+        System.out.println("Valid PalindromeII: "+array.validPalindromeII("aba"));
+        System.out.println("Total Boats to save people: ");
+
+
+        System.out.println("Two sum: "+array.twoSum(new int[]{3,2,4},6));
+
     }
 }

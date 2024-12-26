@@ -428,31 +428,35 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[0][s.length()-1]);
     }
 
+    int resMax=Integer.MIN_VALUE;
     public void countPalindromicSubstrings(String s){
-        boolean[][] dp=new boolean[s.length()][s.length()];
-        int count=0;
-        for(int g=0;g<s.length();g++){
-            for(int i=0,j=g;j<s.length();i++,j++){
-                if(g==0){
-                    dp[i][j]=true;
-                }else if(g==1){
-                    dp[i][j]=s.charAt(i)==s.charAt(j);
-                }else{
-                    if(s.charAt(i)==s.charAt(j)){
-                        dp[i][j]=dp[i+1][j-1];
-                    }
-                }
-                if(dp[i][j]){
-                    count++;
-                }
-            }
+        int n = s.length();
+        int ans = 0;
+        for(int i=0;i<n;i++) {
+            int even = palindromeCount(s, i, i+1);
+            int odd = palindromeCount(s, i-1, i+1);
+            ans += even + odd + 1;
         }
-        System.out.println(count);
+
+        System.out.println(resMax);
+    }
+    public int palindromeCount(String s, int left, int right) {
+        int count = 0;
+        int max=Integer.MIN_VALUE;
+        while(left >= 0 && right < s.length() && s.charAt(left--) == s.charAt(right++)) {
+            count++;
+            max++;
+        }
+        if(max>resMax){
+            resMax=max;
+        }
+        return count;
     }
 
     public void longestPalindromicSubstring(String s){
         boolean[][] dp=new boolean[s.length()][s.length()];
         int length=Integer.MIN_VALUE;
+        String str="";
         for(int g=0;g<s.length();g++){
             for(int i=0,j=g;j<s.length();i++,j++){
                 if(g==0){
@@ -465,10 +469,14 @@ public class DynamicProgrammingLevel2 {
                     }
                 }
                 if(dp[i][j]){
-                    length=Math.max(length,g+1);
+                    if(g+1>length){
+                        length=g+1;
+                        str=s.substring(i,j+1);
+                    }
                 }
             }
         }
+        System.out.println(str);
         System.out.println(length);
     }
 
@@ -665,6 +673,24 @@ public class DynamicProgrammingLevel2 {
         System.out.println(dp[0][dp.length-1]);
     }
 
+    public int matrixMultiplication(int[] arr, int i, int j,int[][] dp){
+        if(i>=j)
+            return 0;
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int min=Integer.MAX_VALUE;
+        for(int k=i;k<=j-1;k++){
+            int temp=matrixMultiplication(arr,i,k,dp)+matrixMultiplication(arr,k+1,j,dp)+arr[i-1]*arr[k]*arr[j];
+            min=Math.min(temp,min);
+        }
+        return dp[i][j]=min;
+    }
+
+    public void matrixChainMultiplication(int[] arr,int[][] dp){
+        System.out.println(matrixMultiplication(arr,1,arr.length-1,dp));
+    }
+
     public static void main(String[] args) {
         DynamicProgrammingLevel2 dp=new DynamicProgrammingLevel2();
 
@@ -763,5 +789,12 @@ public class DynamicProgrammingLevel2 {
 
         System.out.print("Burst Balloon: ");
         dp.burstBalloon(new int[]{3,1,5,8});
+
+        System.out.println("Matrix chain multiplication: ");
+        int[][] mat=new int[101][101];
+        for (int i = 0; i < mat.length; i++) {
+            Arrays.fill(mat[i], -1);
+        }
+        dp.matrixChainMultiplication(new int[]{40,20,30,10,30}, mat);
     }
 }
